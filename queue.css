@@ -1,0 +1,187 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    margin: 0;
+    padding-top: 20px;
+    padding-right: 0;
+    width: 100%;
+}
+
+.left-panel{
+    width:37%;
+    float: left;
+    padding-left: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.center{
+    width: 30%;
+    float: left;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.side-panel{
+    float: left;
+    width: 25%;
+    border: 2px solid black;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.next{
+    border: 2px solid black;
+    border-radius: 25px;
+    width: 60%;
+    height: 100%;
+    text-align: center;
+    float: left;
+}
+
+.time{
+    width: 20%;
+    float: left;
+    border: 2px solid black;
+    border-radius: 15px;
+    height: 100%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.next-btn-div{
+    width: 20%;
+    float: left;
+    margin-left: 20px;
+}
+
+.header{
+    height: 10%;
+}
+
+.next-btn{
+    width: 90%;
+    height: 90%;
+    border-radius: 25px;
+}
+
+.queue{
+    margin-top: 20px;
+    height: 60%;
+    width: 90%;
+    text-align: center;
+}
+
+.list{
+    list-style: none;
+    padding: 0;
+}
+
+.list li{
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 40px;
+    width: inherit;
+    margin-left: 0;
+    text-align: center;
+    margin-top: 5px;
+    padding-top: 15px;
+}
+
+.chat{
+    width: 100%;
+}
+
+.msg{
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 10 5 10 5;
+}
+
+.msg-text{
+    font-size: 15px;
+}
+
+
+.msg-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin-top: 70%;
+    margin-left: 70%;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.msg-btn a{
+    text-decoration: none;
+}
+
+.next-btn a{
+    text-decoration: none;
+}
+
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.add-msg{
+    margin-top: 70%;
+}
+
+.add-msg textarea{
+    width: 95%;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.msg-submit-btn{
+    margin-left: 10px;
+    border-radius: 10px;
+    
+}
+
+.search{
+    width: 100%;
+}
+
+.search-res-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px; 
+}
+
+.search-res-div button{
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.search-res-div button a{
+    text-decoration: none;
+}
+
+.search-res{
+    margin-right: 5px;
+}
+
+.search form{
+    margin-bottom: 0;
+}
+
+.panel{
+    width: 80%;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 25px;
+}
+
+
+
