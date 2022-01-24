@@ -1,0 +1,40 @@
+body{
+    margin: 10;
+    padding: 10;
+}
+
+header{
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+.rooms_list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+
+}
+
+.room{
+    border-style: solid;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
+}
+
+#room_1{
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#room_2{
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.create_room{
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+}
+
