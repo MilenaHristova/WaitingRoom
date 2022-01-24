@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2022 at 04:36 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.0
+-- Generation Time: Jan 24, 2022 at 05:13 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,41 +27,39 @@ SET time_zone = "+00:00";
 -- Table structure for table `messages`
 --
 
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `faculty_number` int(5) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `role` int(11) NOT NULL,
-  `password` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 CREATE TABLE `messages` (
-  `msg_id` int(11) NOT NULL PRIMARY KEY,
+  `msg_id` int(11) NOT NULL,
   `text` varchar(300) NOT NULL,
   `author_id` int(11) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-    FOREIGN KEY(author_id) REFERENCES users(user_id)
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room`
+-- Table structure for table `rooms`
 --
 
 CREATE TABLE `rooms` (
-  `room_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `room_id` int(11) NOT NULL,
   `creator_id` int(11) NOT NULL,
   `moderator_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(400) NOT NULL,
   `url` varchar(400) NOT NULL,
-  `meeting_password` varchar(100) NOT NULL,
-    FOREIGN KEY(creator_id) REFERENCES users(user_id),
-    FOREIGN KEY(moderator_id) REFERENCES users(user_id)
-    
+  `meeting_password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `url`, `meeting_password`) VALUES
+(1, 1, 1, 'Защита на проекти 1-ва група', 'ееееееееее\r\nееееееееее\r\nееееееееее', '', ''),
+(2, 1, 1, 'Устен изпит Кн2', 'е', '', ''),
+(3, 1, 1, 'Минко 2025 :(', 'уфф', '', ''),
+(4, 1, 1, 'Писмен изпит ИС', '', '', ''),
+(5, 1, 1, 'екстра дълго описание', 'еееееееееееееееееееееееееееееееееееееееееееееееееееееее    ннннннннннннннннннннннннннннннннннннннн   нннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннн    тнвнпмрвлчм„ тхвнпмрвчлм гсфтхпнмрв сдхпнзрв гктсндвзм ктсндв', '', '');
 
 -- --------------------------------------------------------
 
@@ -72,9 +70,7 @@ CREATE TABLE `rooms` (
 CREATE TABLE `room_student` (
   `room_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `place` int(11) NOT NULL,
-    FOREIGN KEY(room_id) REFERENCES rooms(room_id),
-    FOREIGN KEY(student_id) REFERENCES users(user_id)
+  `place` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -83,14 +79,21 @@ CREATE TABLE `room_student` (
 -- Table structure for table `users`
 --
 
-
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `faculty_number` int(5) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `role` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`faculty_number`, `name`, `role`, `password`) VALUES
-(89999, 'Петър Петров', 1, 'passwd');
+INSERT INTO `users` (`user_id`, `faculty_number`, `name`, `role`, `username`, `password`) VALUES
+(1, 89999, 'Петър Петров', 1, '', 'passwd');
 
 --
 -- Indexes for dumped tables
@@ -99,11 +102,71 @@ INSERT INTO `users` (`faculty_number`, `name`, `role`, `password`) VALUES
 --
 -- Indexes for table `messages`
 --
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`msg_id`),
+  ADD KEY `author_id` (`author_id`);
 
 --
--- Indexes for table `room`
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD KEY `creator_id` (`creator_id`),
+  ADD KEY `moderator_id` (`moderator_id`);
+
+--
+-- Indexes for table `room_student`
+--
+ALTER TABLE `room_student`
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username_unique` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`moderator_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `room_student`
+--
+ALTER TABLE `room_student`
+  ADD CONSTRAINT `room_student_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`),
+  ADD CONSTRAINT `room_student_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
