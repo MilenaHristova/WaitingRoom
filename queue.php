@@ -10,8 +10,8 @@
         <div class="navbar">
             <button><a href=#>Изход</a></button>
         </div>
-        <?php if(5 == 5) : ?>
-          <div class="panel">Твой ред е! url: hhhhhhhh парола: хххх</div>
+        <?php if(isset($_REQUEST['room'])) : ?>
+          <div class="panel"><?php echo $_REQUEST['room'] ?></div>
         <?php endif; ?>
         
         <div class="left-panel">
