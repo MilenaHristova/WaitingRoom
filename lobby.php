@@ -12,19 +12,22 @@
 </header>
 
 <div class="rooms_list">
-    <div class="room" id="room_1">
-        <p>Име на стая: name</p>
-        <p>Описание: description</p>
-        <button type="button">Влез</button>
-    </div>
-
-    <div class="room" id="room_2">
-        <p>Name: name2</p>
-        <p>description: description2</p>
-        <button type="button">Join</button>
-    </div>
-
-
+<?php
+require 'connect_db.php';
+$query = 'SELECT name, description FROM rooms';
+$statements = $pdo->query($query);
+$rows = $statements->fetchAll(PDO::FETCH_ASSOC);
+if($rows){
+    foreach($rows as $row){
+        echo "<div class=\"room\">
+        <p>Име на стая: {$row['name']}</p>
+        <p>Описание: {$row['description']}</p>
+        <button class=\"join_button\" type=\"button\">Влез</button>
+        </div>";
+    }
+}
+?>
+    
 </div>
 
 <div class="create_room">

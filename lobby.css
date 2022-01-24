@@ -22,19 +22,22 @@ header{
     margin: 10px;
 }
 
-#room_1{
-    grid-row: 1;
-    grid-column: 1;
-}
+#create_room_btn{
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid;
 
-#room_2{
-    grid-row: 2;
-    grid-column: 1;
-}
-
-.create_room{
     position: fixed;
-    right: 0px;
-    bottom: 0px;
+    right:10px;
+    bottom:10px;
+}
+
+.join_button{
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid;
+    float:right;
 }
 
