@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
 
-    require_once 'connect_db.php';
+    require_once '../connect_db.php';
 
 
     function test_username($username){
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION["user_id"] = $rows[0]['user_id'];
 
-   		require_once("lobby.php");
+   		require_once("../lobby/lobby.php");
 
    }
    else{

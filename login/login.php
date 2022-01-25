@@ -26,7 +26,7 @@ session_start();
     <input type="password" id="password" name="password">
     </div>
     <input class="submit" type="submit" value="Влизане">
-    <div class="registration_link"><a href="registration.php">Регистрирай се</a></div>
+    <div class="registration_link"><a href="../registration/registration.php">Регистрирай се</a></div>
 
 </form>
 <?php
