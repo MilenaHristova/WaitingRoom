@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION["registration_errors"])){
+if(session_status() === PHP_SESSION_NONE){
 session_start();
 }
 ?>

@@ -8,16 +8,20 @@
 <body>
 <header>
 <?php
-require_once '../connect_db.php';
-$db = Database::getInstance();
-$pdo = $db->getConnection();
-$user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM users WHERE users.user_id LIKE $user_id";
-$statements = $pdo->query($query);
-$rows = $statements->fetchAll(PDO::FETCH_ASSOC);
-$user_details = $rows[0];
-echo "<p>Добре дошли, {$user_details['name']}</p>";
-
+if(session_status() === PHP_SESSION_NONE){
+session_start();
+}
+if(isset($_SESSION['user_id'])){
+    require_once '../connect_db.php';
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT * FROM users WHERE users.user_id LIKE $user_id";
+    $statements = $pdo->query($query);
+    $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
+    $user_details = $rows[0];
+    echo "<p>Добре дошли, {$user_details['name']}</p>";
+}
 ?>
 
 
@@ -28,7 +32,7 @@ echo "<p>Добре дошли, {$user_details['name']}</p>";
 require_once '../connect_db.php';
 $db = Database::getInstance();
 $pdo = $db->getConnection();
-$query = 'SELECT name, description FROM rooms';
+$query = 'SELECT name, description, room_id FROM rooms';
 $statements = $pdo->query($query);
 $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
 if($rows){
@@ -36,7 +40,10 @@ if($rows){
         echo "<div class=\"room\">
         <p>Име на стая: {$row['name']}</p>
         <p>Описание: {$row['description']}</p>
-        <button class=\"join_button\" type=\"button\">Влез</button>
+        <form method=\"post\" action=\"../room/queue.php\">
+            <input type=\"hidden\" name=\"room_id\" value=\"{$row['room_id']}\">
+            <button class=\"join_button\" type=\"submit\">Влез</button>
+        </form>
         </div>";
     }
 }
@@ -45,9 +52,13 @@ if($rows){
 </div>
 
 <div class="create_room">
-<?php if($user_details['role'] == "2"): ?>
-        <button id="create_room_btn" type="button">Създай стая</button>
-<?php endif; ?>
+<?php
+if(isset($_SESSION['user_id'])){
+    if($user_details['role'] == "2"){
+        echo "<button id=\"create_room_btn\" type=\"button\">Създай стая</button>";
+    }
+}
+?>
 </div>
 </body>
 </html>
