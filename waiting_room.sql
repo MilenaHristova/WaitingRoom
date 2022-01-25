@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2022 at 05:13 PM
+-- Generation Time: Jan 25, 2022 at 04:57 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -57,9 +57,7 @@ CREATE TABLE `rooms` (
 INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `url`, `meeting_password`) VALUES
 (1, 1, 1, 'Защита на проекти 1-ва група', 'ееееееееее\r\nееееееееее\r\nееееееееее', '', ''),
 (2, 1, 1, 'Устен изпит Кн2', 'е', '', ''),
-(3, 1, 1, 'Минко 2025 :(', 'уфф', '', ''),
-(4, 1, 1, 'Писмен изпит ИС', '', '', ''),
-(5, 1, 1, 'екстра дълго описание', 'еееееееееееееееееееееееееееееееееееееееееееееееееееееее    ннннннннннннннннннннннннннннннннннннннн   нннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннннн    тнвнпмрвлчм„ тхвнпмрвчлм гсфтхпнмрв сдхпнзрв гктсндвзм ктсндв', '', '');
+(3, 1, 1, 'Писмен изпит ИС', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -85,7 +83,7 @@ CREATE TABLE `users` (
   `name` varchar(64) NOT NULL,
   `role` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` varchar(16) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -142,7 +140,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
