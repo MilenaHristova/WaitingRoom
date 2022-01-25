@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 
    $_SESSION["user_id"] = $rows[0]["user_id"];
+   $_SESSION["fn"] = $rows[0]["faculty_number"];
+   $_SESSION["user_role"] = $rows[0]["role"];
    require_once("../lobby/lobby.php");
 
 }

@@ -28,21 +28,19 @@
     $students = loadQueue($room_id, 10);
     $next_fn = getNext($room_id);
 
-    //$user_role = $_SESSION['user_role'];
-    $user_role = 1;
-    $_SESSION["fn"] = 53742;
+    $user_role = $_SESSION['user_role'];
     
-    if($user_role == 2){
-        $panel_visibility = 'hidden';
-    } elseif($user_role == 1 && $_SESSION["fn"] == $next_fn){
+    if($user_role == 1 && $_SESSION["fn"] == $next_fn){
         $panel_visibility = 'visible';
+    } else {
+        $panel_visibility = 'hidden';
     }
            
     
     ?>
     <div class="container">
         <div class="navbar">
-            <button><a href='lobby.php'>Назад</a></button>
+            <button><a href='../lobby/lobby.php'>Назад</a></button>
             <div class="title">
                 <h1><?php echo $descr["name"] ?></h1>
                 <p><?php echo $descr["description"] ?></p>
