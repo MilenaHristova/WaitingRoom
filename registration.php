@@ -1,111 +1,69 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require_once 'connect_db.php';
-
-
-    function test_username($username){
-        if (empty($username)){
-            return "Потребителското име е задължително поле";
-        }
-
-    	$length = mb_strlen($username);
-    	if ($length < 3){
-            return "Потребителското име трябва да е минимум 3 символа, а вие сте въвели $length";
-        } else if ($length > 20){
-            return "Потребителското име трябва да е максимум 20 символа, а вие сте въвели $length";
-    	}
-
-        $db = Database::getInstance();
-        $pdo = $db->getConnection();
-
-    	$query = "SELECT * FROM users WHERE users.username LIKE \"$username\"";
-    	$statements = $pdo->query($query);
-        if($statements->rowCount() > 0){
-           return "Потребителското име вече е заето";
-        }
-   }
-
-   function test_password($password){
-        if(empty($password)){
-            return "Паролата е задължително поле";
-        }
-        $length = mb_strlen($password);
-        if($length < 8){
-            return "Паролата трябва да е поне 8 символа, а вие сте въвели $length";
-        }
-
-   }
-
-   function test_names($names){
-        if(empty($names)){
-            return "Имената са задължително поле";
-        }
-        $names_split = mb_split("\s", $names);
-        if(count($names_split) != 2){
-            return "Изискват се 2 имена";
-        }
-   }
-
-   function test_fn($fn){
-        if(empty($fn)){
-            return "ФН е задължително поле";
-        }
-
-        if(!ctype_digit($fn)){
-           return "ФН съдържа само цифри";
-        }
-
-        $length = mb_strlen($fn);
-        if($length != 5){
-            return "Грешен ФН";
-        }
-
-   }
-
-   $username = $_POST["username"];
-   $password = $_POST["password"];
-   $names = $_POST["name"];
-   $role =  $_POST["role_options"];
-   $fn =  $_POST["fn"];
-
-   $username_error = test_username($username);
-   $password_error = test_password($password);
-   $names_error = test_names($names);
-   $fn_error = $role == "1" ? test_fn($fn) : null;
-
-   $errors = array();
-   if($username_error != null){
-        $errors['username'] = $username_error;
-   }
-   if($password_error != null){
-        $errors['password'] = $password_error;
-   }
-   if($names_error != null){
-       $errors['names'] = $names_error;
-   }
-   if($fn_error != null){
-       $errors['fn'] = $fn_error;
-   }
-
-   if(empty($errors)){
-        if($role == "2"){
-            $fn = "00000";
-        }
-        $passwd_hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $db = Database::getInstance();
-        $pdo = $db->getConnection();
-
-        $insert_query = "INSERT INTO users (faculty_number,name, role, username, password) VALUES ($fn, $names, $role, $username, $passwd_hash)";
-        $pdo->exec($insert_query);
-   		$outputMessage = array('success' => true);
-   		echo json_encode($outputMessage, JSON_UNESCAPED_UNICODE);
-
-   }
-   else{
-   		$outputMessage = array('success' => false, 'errors' => $errors);
-   		echo json_encode($outputMessage, JSON_UNESCAPED_UNICODE);
-   }
-
+if(!isset($_SESSION["registration_errors"])){
+session_start();
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="registration.css">
+    <title>Регистрация</title>
+    <script type="text/javascript">
+        function show_hide_fn() {
+            var student_option = document.getElementById("student");
+            var fn_div = document.getElementById("fn_field");
+            fn_div.style.display = student_option.checked ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+<article>
+    <h1>Регистрация</h1>
+    <form id="form" action="registration_validation.php" method="post" >
+        <div class="field">
+            <label for="username">Потребителско име</label>
+            <input type="text" name="username" >
+        </div>
+        <div class="field">
+            <label for="password">Парола </label>
+            <input type="password" name="password">
+        </div>
+        <div class="field">
+            <label for="name">Имена</label>
+            <input type="text" name="name">
+        </div>
+        <div class="field">
+            <label for="role">Роля</label>
+            <div class="role_option">
+                <input type="radio" id="student" value="1" name="role_options" checked="checked" onclick="show_hide_fn()">
+                <label for="student">Студент</label>
+             </div>
+             <div class="role_option">
+                <input type="radio" id="professor" value ="2" name="role_options" onclick="show_hide_fn()">
+                <label for="professor">Професор</label>
+             </div>
+        </div>
+        <div class="field" id="fn_field">
+            <label for="fn">ФН</label>
+            <input type="text" name="fn">
+        </div>
+
+        <input class="submit" type="submit" value="Регистрирай ме">
+
+    </form>
+
+    <?php
+        if(isset($_SESSION["registration_errors"])){
+            echo "<div class= \"errors\">";
+            foreach($_SESSION["registration_errors"] as $error){
+                echo "<p>$error</p>";
+            }
+            echo "</div>";
+        }
+    ?>
+
+</article>
+</body>
+</html>
