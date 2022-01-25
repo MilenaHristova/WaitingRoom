@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2022 at 08:41 PM
+-- Generation Time: Jan 25, 2022 at 09:58 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -58,7 +58,8 @@ CREATE TABLE `rooms` (
 INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `url`, `meeting_password`, `next_fn`) VALUES
 (1, 1, 1, 'Защита на проекти 1-ва група', 'ееееееееее\r\nееееееееее\r\nееееееееее', '', '', NULL),
 (2, 1, 1, 'Устен изпит Кн2', 'е', '', '', NULL),
-(3, 1, 1, 'Писмен изпит ИС', '', '', '', NULL);
+(3, 1, 1, 'Писмен изпит ИС', '', '', '', NULL),
+(7, 5, 5, 'Стая 1', 'Описание', 'link', 'password', 81333);
 
 -- --------------------------------------------------------
 
@@ -72,6 +73,16 @@ CREATE TABLE `room_student` (
   `place` int(11) NOT NULL,
   `time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `room_student`
+--
+
+INSERT INTO `room_student` (`room_id`, `student_id`, `place`, `time`) VALUES
+(7, 6, 1, NULL),
+(7, 7, 2, NULL),
+(7, 8, 3, NULL),
+(7, 9, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,7 +105,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `faculty_number`, `name`, `role`, `username`, `password`) VALUES
 (1, 89999, 'Петър Петров', 1, '', 'passwd'),
-(4, 81761, 'milena hr', 1, 'milena', '$2y$10$t/FfsQxbNquPBYGbsG5NLOH3f56s4W9HChLklF5W91.92Y2MYirte');
+(4, 81761, 'milena hr', 1, 'milena', '$2y$10$t/FfsQxbNquPBYGbsG5NLOH3f56s4W9HChLklF5W91.92Y2MYirte'),
+(5, 0, 'Милен Петров', 2, 'teacher', '$2y$10$lyIYNsp6TJhW5neRwRkt0.T4sZhdxFCLHStgOY0HWxjFkRqd/qLoy'),
+(6, 81111, 'Студент Едно', 1, 'student1', '$2y$10$S1xKJO7bGSlU8RQjjBmt2ex4Rme9ba41HcvNwnbPPoLBcaiky2wEy'),
+(7, 81222, 'Студент Две', 1, 'student2', '$2y$10$2BdT28fJmqcDDUvxkF9XHewBeyfz6Q.YrU2aNOboR5skYoWfp33fS'),
+(8, 81333, 'Студент Три', 1, 'student3', '$2y$10$kJqWLlsaPPFlVga1kU3NKefj2u8Pf5HLHB2Qnm8LGMBQuWvZFSC2u'),
+(9, 81444, 'Студент 4', 1, 'student4', '$2y$10$G.hrMEkSs2X.rSesANPQoeJmuh7sHZVdIknMCWDgQVpmqCJ01p8nq');
 
 --
 -- Indexes for dumped tables
@@ -137,13 +153,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

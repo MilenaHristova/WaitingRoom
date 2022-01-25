@@ -5,6 +5,10 @@
             
                 require '../connect_db.php';
             
+                if(session_status() === PHP_SESSION_NONE){
+                    session_start();
+                }
+            
                 function random_filename($length, $directory, $extension) {    
                     do {
                         $key = '';
@@ -22,14 +26,17 @@
                 $descr = '';
                 $url = '';
                 $passwd = '';
-                $userid = 1;
+                $userid = $_SESSION["user_id"];
             
                 $target_file = null;
-                $target_dir = "uploads/";
+                $target_dir = "../uploads/";
                 
                 if(!isset($_POST["submit"])){
                     exit();
                 }
+            
+                $db = Database::getInstance();
+                $pdo = $db->getConnection();
                    
                 $title = $_POST["title"];
                 $descr = $_POST["descr"];
@@ -105,7 +112,7 @@
                         }  
                     }
                     
-                    header("Location: queue.php?room=".$room_id);
+                    header("Location: ../room/queue.php?room=".$room_id);
                     exit();
                     
                 } catch(PDOException $e){

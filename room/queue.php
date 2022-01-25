@@ -107,9 +107,6 @@
             
             <div class="queue">
                 <ul class="list">
-                    <li>First</li>
-                    <li>Second</li>
-                    <li>Third</li>
                 </ul>
             </div> 
         </div>
