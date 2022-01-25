@@ -9,7 +9,7 @@
 
 <body>
     <?php
-    require_once 'connect_db.php';
+    require_once '../connect_db.php';
     include_once 'queue_operations.php';
 
     if (session_status() === PHP_SESSION_NONE) {
@@ -42,7 +42,7 @@
     ?>
     <div class="container">
         <div class="navbar">
-            <button><a href=#>Изход</a></button>
+            <button><a href='lobby.php'>Назад</a></button>
             <div class="title">
                 <h1><?php echo $descr["name"] ?></h1>
                 <p><?php echo $descr["description"] ?></p>

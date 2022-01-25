@@ -3,7 +3,7 @@
         <p>
             <?php
             
-                require 'connect_db.php';
+                require '../connect_db.php';
             
                 function random_filename($length, $directory, $extension) {    
                     do {

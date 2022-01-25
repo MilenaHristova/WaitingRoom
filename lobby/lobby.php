@@ -40,10 +40,7 @@ if($rows){
         echo "<div class=\"room\">
         <p>Име на стая: {$row['name']}</p>
         <p>Описание: {$row['description']}</p>
-        <form method=\"post\" action=\"../room/queue.php\">
-            <input type=\"hidden\" name=\"room_id\" value=\"{$row['room_id']}\">
-            <button class=\"join_button\" type=\"submit\">Влез</button>
-        </form>
+        <button class=\"join_button\" type=\"button\"><a href=\"../room/queue.php?room={$row['room_id']}\">Влез</a></button>
         </div>";
     }
 }
@@ -52,13 +49,9 @@ if($rows){
 </div>
 
 <div class="create_room">
-<?php
-if(isset($_SESSION['user_id'])){
-    if($user_details['role'] == "2"){
-        echo "<button id=\"create_room_btn\" type=\"button\">Създай стая</button>";
-    }
-}
-?>
+<?php if($user_details['role'] == "2"): ?>
+        <button id="create_room_btn" type="button"><a href="../create_room/create_room.html">Създай стая</a></button>
+<?php endif; ?>
 </div>
 </body>
 </html>

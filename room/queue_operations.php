@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once('connect_db.php');
+require_once('../connect_db.php');
 
 function loadQueue($room_id, $count){
     $db = Database::getInstance();
