@@ -69,8 +69,7 @@ body{
 }
 
 .queue{
-    margin-top: 20px;
-    height: 60%;
+    margin-top: 30%;
     width: 90%;
     text-align: center;
 }
@@ -83,12 +82,12 @@ body{
 .list li{
     border: 1px solid black;
     border-radius: 15px;
-    height: 40px;
+    height: 25px;
     width: inherit;
     margin-left: 0;
     text-align: center;
     margin-top: 5px;
-    padding-top: 15px;
+    padding-top: 7px;
 }
 
 .chat{
@@ -191,6 +190,13 @@ body{
 .create-form form label{
     margin-right: 20px;
 }
+
+.title{
+    text-align: center;
+    align-content: center;
+    width: 100%;
+}
+
 
 
 

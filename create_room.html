@@ -13,7 +13,7 @@
         
         <div class="create-form">
             <h2>Създаване на стая</h2>
-            <form action="create_room.php" method="post">
+            <form action="create_room.php" method="post" enctype="multipart/form-data">
                 <div>
                     <label for="title">Име</label>
                     <input type="text" name="title" id="title">
@@ -30,7 +30,11 @@
                     <label for="password">Парола за срещата</label>
                     <input type="text" name="password" id="password">
                 </div>
-                <input type="submit" value="Напред">
+                <div>
+                    <label for="file">Списък със студенти</label>
+                    <input type="file" name="students" id="students">
+                </div>
+                <input type="submit" name="submit" value="Напред">
             </form>
         </div>
     </div>
