@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="lobby.css">
+    <link rel="stylesheet" href="../lobby/lobby.css">
     <title>Lobby</title>
 </head>
 <body>
 <header>
 <?php
-require_once 'connect_db.php';
+require_once '../connect_db.php';
 $db = Database::getInstance();
 $pdo = $db->getConnection();
 $user_id = $_SESSION['user_id'];
@@ -25,7 +25,7 @@ echo "<p>Добре дошли, {$user_details['name']}</p>";
 
 <div class="rooms_list">
 <?php
-require_once 'connect_db.php';
+require_once '../connect_db.php';
 $db = Database::getInstance();
 $pdo = $db->getConnection();
 $query = 'SELECT name, description FROM rooms';

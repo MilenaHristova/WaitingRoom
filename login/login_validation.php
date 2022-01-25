@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
 
-    require_once 'connect_db.php';
+   require_once "../connect_db.php";
 
    $username = $_POST["username"];
    $password = $_POST["password"];
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 
    $_SESSION["user_id"] = $rows[0]["user_id"];
-   require_once("lobby.php");
+   require_once("../lobby/lobby.php");
 
 }
 ?>
