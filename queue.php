@@ -2,38 +2,41 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="refresh" content="60;URL='queue.php?room=<?php echo $_REQUEST['room']?>'">
 <title> Чакалня </title>
     <link rel="stylesheet" href="queue.css">
 </head>
 
 <body>
     <?php
-        require_once 'connect_db.php';
-        include_once 'queue_operations.php';
-    
+    require_once 'connect_db.php';
+    include_once 'queue_operations.php';
+
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
+    }
     
-        if(!isset($_REQUEST['room']))
-        {
-            echo '<p>Стаята не е намерена.</p>';
-            header("Location: lobby.php");
-            exit();
-        }
+    if(!isset($_REQUEST['room']))
+    {
+        echo '<p>Стаята не е намерена.</p>';
+        header("Location: lobby.php");
+        exit();
+    }
            
-        $room_id = $_REQUEST['room'];
-        $descr = loadRoomDescr($room_id);
-        $students = loadQueue($room_id, 10);
-        
-        if(!isset($_SESSION["current_place"])){
-            $_SESSION["current_place"] = 1;
-            getNext($room_id);
-        }
+    $room_id = $_REQUEST['room'];
+    $descr = loadRoomDescr($room_id);
+    $students = loadQueue($room_id, 10);
+    $next_fn = getNext($room_id);
+
+    //$user_role = $_SESSION['user_role'];
+    $user_role = 1;
+    $_SESSION["fn"] = 53742;
     
-        $current_fn = $_SESSION["current_fn"];
-        
-    
-        //$user_role = $_SESSION['user_role'];
-        $user_role = 2;
+    if($user_role == 2){
+        $panel_visibility = 'hidden';
+    } elseif($user_role == 1 && $_SESSION["fn"] == $next_fn){
+        $panel_visibility = 'visible';
+    }
            
     
     ?>
@@ -45,16 +48,14 @@
                 <p><?php echo $descr["description"] ?></p>
             </div> 
         </div>
-        <?php if(isset($_REQUEST['room'])) : ?>
-          <div class="panel"><?php echo $_REQUEST['room'] ?></div>
-        <?php endif; ?>
+        <div class="panel" style="visibility:<?php echo $panel_visibility ?>">Твой ред е! url: <?php echo $descr["url"] ?> <?php echo $descr["meeting_password"] != null ? 'парола:'.$descr["meeting_password"] : ''?></div>
         
         <div class="left-panel">
             <h2>Опашка чакащи</h2>
             <div class="header">
                 <div class="next">
                     <p>Следващият номер:</p>
-                    <p><?php echo $current_fn ?></p>
+                    <p><?php echo $next_fn != 0 ? $next_fn:'Край' ?></p>
                 </div>
                 <?php if($user_role == 1): ?>
                 <div class="time">

@@ -2,6 +2,7 @@
     <body>
         <p>
             <?php
+            
                 require 'connect_db.php';
             
                 function random_filename($length, $directory, $extension) {    
@@ -61,9 +62,8 @@
                     $query = 'INSERT INTO rooms(creator_id, moderator_id, name, description, meeting_password, url) values('.$pdo->quote($userid).','.$pdo->quote($userid).','.$pdo->quote($title).','.$pdo->quote($descr).','.$pdo->quote($passwd).','.$pdo->quote($url).')';
                     
                     $pdo->exec($query);
-                    $room_id = null;
-                    
                     $room_id = $pdo->lastInsertId();
+                    $first_fn = null;
                     
                     if($target_file != null){
                         $file = fopen($target_file, 'r');
@@ -74,6 +74,10 @@
                                 $fn = $row[0];
                                 if($fn == ''){
                                     continue;
+                                }
+                                
+                                if($first_fn == null){
+                                    $first_fn = $fn;
                                 }
                                 
                                 $id_query = 'SELECT user_id FROM users WHERE faculty_number = '.$fn;
@@ -92,7 +96,12 @@
                                 $insert_str = implode(', ', $inserts);
                                 $query = 'INSERT INTO room_student(room_id, student_id, place) VALUES'.$insert_str.';';
                                 $pdo->exec($query);
-                            }      
+                            }
+                            
+                            if($first_fn != null){
+                                $query = 'UPDATE rooms SET next_fn = '.$first_fn.' WHERE room_id = '.$room_id;
+                                $pdo->exec($query);
+                            }
                         }  
                     }
                     

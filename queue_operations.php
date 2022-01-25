@@ -30,27 +30,51 @@ function loadRoomDescr($room_id){
     return $result;
 }
 
-function getNext($room_id){
+function updateNext($room_id){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
-    $curr = $_SESSION["current_place"];
-    echo 'CURRENT: '.$curr;
+    $query = 'SELECT rs.place FROM users u 
+              JOIN room_student rs ON u.user_id = rs.student_id 
+              JOIN rooms r on rs.room_id = r.room_id 
+              WHERE r.room_id = '.$room_id.' AND u.faculty_number = r.next_fn;';
+    
+    $st = $pdo->query($query);
+    $result = $st->fetch(PDO::FETCH_ASSOC);
+    
+    if($result == FALSE){
+        $curr = 0;
+    } else {
+        $curr = $result["place"]; 
+    }
+    
     $query = 'SELECT user_id, faculty_number FROM users u
          JOIN room_student rs ON u.user_id = rs.student_id JOIN rooms r on rs.room_id = r.room_id
          WHERE r.room_id = '.$room_id.' AND rs.place = '.($curr + 1).';';
     
     $st = $pdo->query($query);
     $result = $st->fetch(PDO::FETCH_ASSOC);
-    $_SESSION["current_fn"] = $result["faculty_number"];
-    $_SESSION["current_place"] = $curr + 1;
+    $next_fn = $result["faculty_number"] != null ? $result["faculty_number"] : 0;
+    
+    $query = 'UPDATE rooms SET next_fn = '.$next_fn.' WHERE room_id = '.$room_id;
+    $pdo->exec($query);
     
     header("Location: queue.php?room=".$room_id);
     exit();
 }
 
+function getNext($room_id){
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+    $query = 'SELECT next_fn FROM rooms WHERE room_id = '.$room_id;
+    $st = $pdo->query($query);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+    return $res["next_fn"];
+}
+
 if(isset($_POST["next"])){
-    getNext($_POST["room_id"]);
+    updateNext($_POST["room_id"]);
 }
 
 

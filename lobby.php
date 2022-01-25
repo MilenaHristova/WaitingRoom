@@ -14,6 +14,8 @@
 <div class="rooms_list">
 <?php
 require 'connect_db.php';
+$db = Database::getInstance();
+$pdo = $db->getConnection();
 $query = 'SELECT name, description FROM rooms';
 $statements = $pdo->query($query);
 $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
