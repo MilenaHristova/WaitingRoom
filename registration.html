@@ -13,31 +13,35 @@
     </script>
 </head>
 <body>
-<article id="div1">
+<article>
     <h1>Регистрация</h1>
-    <form id="form">
+    <form id="form" action="registration.php" method="post" >
         <div class="field">
             <label for="username">Потребителско име</label>
-            <input type="text" id="username">
+            <input type="text" name="username" >
         </div>
         <div class="field">
             <label for="password">Парола </label>
-            <input type="password" id="password">
+            <input type="password" name="password">
+        </div>
+        <div class="field">
+            <label for="name">Имена</label>
+            <input type="text" name="name">
         </div>
         <div class="field">
             <label for="role">Роля</label>
             <div class="role_option">
-                <input type="radio" id="student" value="student" name="role_options" checked="checked" onclick="show_hide_fn()">
+                <input type="radio" id="student" value="1" name="role_options" checked="checked" onclick="show_hide_fn()">
                 <label for="student">Студент</label>
              </div>
              <div class="role_option">
-                <input type="radio" id="professor" value ="professor" name="role_options" onclick="show_hide_fn()">
+                <input type="radio" id="professor" value ="2" name="role_options" onclick="show_hide_fn()">
                 <label for="professor">Професор</label>
              </div>
         </div>
         <div class="field" id="fn_field">
             <label for="fn">ФН</label>
-            <input type="text" id="fn">
+            <input type="text" name="fn">
         </div>
 
         <input class="submit" type="submit" value="Регистрирай ме">
