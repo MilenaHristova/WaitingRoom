@@ -4,10 +4,11 @@ class Database {
     private static $instance = null;
     
     private function __construct(){
-        $host = 'localhost';
-        $db = 'waiting_room';
-        $user = 'test_user';
-        $password = 'pass';
+        $config = include('config.php');
+        $host = $config['DB_SERVERNAME'];
+        $db = $config['DB_NAME'];
+        $user = $config['DB_USERNAME'];
+        $password = $config['DB_PASSWORD'];
 
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
         

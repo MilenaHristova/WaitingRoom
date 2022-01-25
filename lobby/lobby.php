@@ -28,7 +28,7 @@ echo "<p>Добре дошли, {$user_details['name']}</p>";
 require_once '../connect_db.php';
 $db = Database::getInstance();
 $pdo = $db->getConnection();
-$query = 'SELECT name, description FROM rooms';
+$query = 'SELECT name, description, room_id FROM rooms';
 $statements = $pdo->query($query);
 $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
 if($rows){
@@ -36,7 +36,7 @@ if($rows){
         echo "<div class=\"room\">
         <p>Име на стая: {$row['name']}</p>
         <p>Описание: {$row['description']}</p>
-        <button class=\"join_button\" type=\"button\">Влез</button>
+        <button class=\"join_button\" type=\"button\"><a href=\"../room/queue.php?room={$row['room_id']}\">Влез</a></button>
         </div>";
     }
 }
@@ -46,7 +46,7 @@ if($rows){
 
 <div class="create_room">
 <?php if($user_details['role'] == "2"): ?>
-        <button id="create_room_btn" type="button">Създай стая</button>
+        <button id="create_room_btn" type="button"><a href="../create_room/create_room.html">Създай стая</a></button>
 <?php endif; ?>
 </div>
 </body>
