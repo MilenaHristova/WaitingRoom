@@ -42,7 +42,7 @@
     ?>
     <div class="container">
         <div class="navbar">
-            <button><a href=#>Изход</a></button>
+            <button><a href='lobby.php'>Назад</a></button>
             <div class="title">
                 <h1><?php echo $descr["name"] ?></h1>
                 <p><?php echo $descr["description"] ?></p>
