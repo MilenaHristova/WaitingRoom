@@ -19,9 +19,16 @@
     if(!isset($_REQUEST['room']))
     {
         echo '<p>Стаята не е намерена.</p>';
-        header("Location: lobby.php");
+        header("Location: ../lobby/lobby.php");
         exit();
     }
+
+    if(!$_REQUEST['is_logged'])
+        {
+            echo '<p>Моля влезте в акаунта си.</p>';
+            header("Location: ../login/login.php?room_id={$_REQUEST['room']}");
+            exit();
+        }
            
     $room_id = $_REQUEST['room'];
     $descr = loadRoomDescr($room_id);

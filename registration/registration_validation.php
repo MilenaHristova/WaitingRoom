@@ -61,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($length != 5){
             return "Грешен ФН";
         }
-
    }
 
    $username = $_POST["username"];
@@ -109,13 +108,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["fn"] = $rows[0]['faculty_number'];
         $_SESSION["user_role"] = $rows[0]["role"];
 
-   		require_once("../lobby/lobby.php");
-
+        if(isset($_REQUEST['room_id'])){
+              header("Location: ../room/queue.php?room={$_REQUEST['room_id']}");
+        }
+        else{
+             header("Location: ../lobby/lobby.php");
+        }
+   		exit();
    }
    else{
-   		$_SESSION["registration_errors"] = $errors;
-   		require_once("registration.php");
-   		session_unset();
+   		header("Location: registration.php?registration_errors=".urlencode(serialize($errors) . "&room_id=" . $_REQUEST['room_id']));
    }
 
 }

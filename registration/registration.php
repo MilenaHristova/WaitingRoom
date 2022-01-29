@@ -21,6 +21,15 @@ session_start();
 <body>
 <article>
     <h1>Регистрация</h1>
+    <?php
+    if(isset($_REQUEST['room_id'])){
+    //$room_id = $_REQUEST['room_id'];
+    echo "<form method=\"post\" action=\"registration_validation.php?room_id={$_REQUEST['room_id']}\">";
+    }
+    else{
+    echo "<form id=\"form\" action=\"registration_validation.php\" method=\"post\" >";
+    }
+    ?>
     <form id="form" action="registration_validation.php" method="post" >
         <div class="field">
             <label for="username">Потребителско име</label>
@@ -55,9 +64,10 @@ session_start();
     </form>
 
     <?php
-        if(isset($_SESSION["registration_errors"])){
+        if(isset($_REQUEST["registration_errors"])){
+            $errors = unserialize(urldecode($_REQUEST["registration_errors"]));
             echo "<div class= \"errors\">";
-            foreach($_SESSION["registration_errors"] as $error){
+            foreach($errors as $error){
                 echo "<p>$error</p>";
             }
             echo "</div>";
