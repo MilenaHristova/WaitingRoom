@@ -96,20 +96,6 @@
             <?php endif; ?>
             
         </div>
-        <div class="center">
-            <h2>Временна опашка</h2>
-            <div class="header">
-                <div class="next">
-                    <p>Следващият номер:</p>
-                    <p>8999</p>
-                </div>
-            </div>
-            
-            <div class="queue">
-                <ul class="list">
-                </ul>
-            </div> 
-        </div>
         <div class="side-panel">
             <div class="chat">
                 <p>Съобщения</p>

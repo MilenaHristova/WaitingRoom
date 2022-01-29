@@ -7,9 +7,24 @@ function loadQueue($room_id, $count){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
+    $query = 'SELECT next_fn FROM rooms WHERE room_id = '.$room_id;
+    $st = $pdo->query($query);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    $next_fn = $row["next_fn"];
+    
+    if($next_fn != null){
+        $query = 'SELECT user_id FROM users WHERE faculty_number = '.$next_fn;
+        $st = $pdo->query($query);
+        $row = $st->fetch(PDO::FETCH_ASSOC);
+        $id = $row["user_id"];
+        
+        $query = 'UPDATE room_student SET waiting = FALSE WHERE student_id = '.$id;
+        $pdo->exec($query);
+    }
+    
     $query = 'SELECT user_id, u.name, faculty_number FROM users u
          JOIN room_student rs ON u.user_id = rs.student_id JOIN rooms r on rs.room_id = r.room_id
-         WHERE r.room_id = '.$room_id.' LIMIT '.$count.';';
+         WHERE r.room_id = '.$room_id.' AND rs.waiting = TRUE LIMIT '.$count.';';
     
     $res = array();
     
@@ -55,9 +70,15 @@ function updateNext($room_id){
     $st = $pdo->query($query);
     $result = $st->fetch(PDO::FETCH_ASSOC);
     $next_fn = $result["faculty_number"] != null ? $result["faculty_number"] : 0;
+    $next_id = $result["user_id"];
     
     $query = 'UPDATE rooms SET next_fn = '.$next_fn.' WHERE room_id = '.$room_id;
     $pdo->exec($query);
+    
+    if($next_id != null){
+        $query = 'UPDATE room_student SET waiting = FALSE WHERE student_id = '.$next_id;
+        $pdo->exec($query);
+    }
     
     header("Location: queue.php?room=".$room_id);
     exit();
