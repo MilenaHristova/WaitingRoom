@@ -26,11 +26,12 @@
     $room_id = $_REQUEST['room'];
     $descr = loadRoomDescr($room_id);
     $students = loadQueue($room_id, 10);
-    $next_fn = getNext($room_id);
+    $next_team = getNext($room_id);
+    $next_fn = $next_team == FALSE ? FALSE : implode(', ', $next_team);
 
     $user_role = $_SESSION['user_role'];
     
-    if($user_role == 1 && $_SESSION["fn"] == $next_fn){
+    if($user_role == 1 && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
     } else {
         $panel_visibility = 'hidden';
@@ -53,7 +54,7 @@
             <div class="header">
                 <div class="next">
                     <p>Следващият номер:</p>
-                    <p><?php echo $next_fn != 0 ? $next_fn:'Край' ?></p>
+                    <p><?php echo $next_fn != FALSE ? $next_fn:'Край' ?></p>
                 </div>
                 <?php if($user_role == 1): ?>
                 <div class="time">
@@ -82,15 +83,32 @@
             
             <?php if($user_role == 2): ?>
             <div class="search">
-                <form action="#" method="get">
+                <form action="" method="post">
                     <label for="fn">Факултетен номер</label>
                     <input type="text" name="fn" id="fn">
-                    <input type="submit" value="Търсене">
+                    <input type="submit" name="search" value="Търсене">
                 </form>
                 <div class="search-res-div">
-                    <p class="search-res">Петър Петров 9999</p>
-                    <button><a href=#>Покани временно</a></button>
-                    <button><a href=#>Покани постоянно</a></button>
+                    <?php
+                    if(isset($_POST["search"])){
+                        $fn = $_POST["fn"];
+                        $res = searchByFn($fn);
+                        if($res == FALSE){
+                            echo '<p class="search-res">Не е намерен резултат.</p>';
+                        } else { ?>
+                            <p class="search-res"><?php echo $res["name"] ?></p>
+                            <form action="search.php" method="post">
+                                <input type="hidden" name="student_id" value="<?php echo $res["user_id"] ?>">
+                                <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+                                <input type="submit" name="invite_temp" value="Покани временно">
+                                <input type="submit" name="invite" value="Покани постоянно">
+                            </form>
+                    <?php
+                        }
+                    }
+                    
+                    ?>
+
                 </div>
             </div>
             <?php endif; ?>

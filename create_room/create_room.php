@@ -76,8 +76,6 @@
             try{
                 insertRoomDetails($pdo);
                 $room_id = $pdo->lastInsertId();
-                
-                $first_fn = null;
                     
                 if($target_file != null){
                     $file = fopen($target_file, 'r');
@@ -102,12 +100,8 @@
                             
                             
                             $team_lead = $row[2];
-                                
-                            if($first_fn == null){
-                                $first_fn = $fn;
-                            }
                             
-                            if($team_lead == $fn){
+                            if($team_lead == $fn || $team_lead == ''){
                                 $teams[$fn] = $team_num;
                                 $team = $team_num;
                                 $team_num += 1;
@@ -133,10 +127,8 @@
                             $pdo->exec($query);
                         }
                             
-                        if($first_fn != null){
-                            $query = 'UPDATE rooms SET next_fn = '.$first_fn.' WHERE room_id = '.$room_id;
-                            $pdo->exec($query);
-                        }
+                        $query = 'UPDATE room_student SET is_next = TRUE WHERE team = 1';
+                        $pdo->exec($query);
                     }  
                 }
                     
