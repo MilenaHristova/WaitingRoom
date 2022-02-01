@@ -1,7 +1,9 @@
 <?php
-if(session_status() === PHP_SESSION_NONE){
-        session_start();
-}
+ if (session_status() === PHP_SESSION_NONE)
+   {
+           session_start();
+   }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
@@ -42,13 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 
    $_SESSION["user_id"] = $rows[0]["user_id"];
+   $_SESSION["name"] = $rows[0]["name"];
    $_SESSION["fn"] = $rows[0]["faculty_number"];
-   $_SESSION["user_role"] = $rows[0]["role"];
+   $_SESSION['user_role'] = $rows[0]["role"];
    if(isset($_REQUEST['room_id'])){
       header("Location: ../room/queue.php?room={$_REQUEST['room_id']}");
    }
    else{
-     header("Location: ../lobby/lobby.php?user_role={$rows[0]["role"]}&user_names={$rows[0]["name"]}");
+     header("Location: ../lobby/lobby.php");
    }
 
 
