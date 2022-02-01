@@ -91,6 +91,16 @@ function searchByFn($fn){
     return $row;
 }
 
+function getStudentTime($id, $room_id){
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+    $query = 'SELECT time FROM room_student WHERE student_id = '.$id.' AND room_id = '.$room_id;
+    $st = $pdo->query($query);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    return $row == FALSE ? FALSE : $row['time'];
+}
+
 
 if(isset($_POST["next"])){
     updateNext($_POST["room_id"]);

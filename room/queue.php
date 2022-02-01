@@ -23,12 +23,14 @@
         exit();
     }
 
-    if(!$_REQUEST['is_logged'])
-        {
-            echo '<p>Моля влезте в акаунта си.</p>';
-            header("Location: ../login/login.php?room_id={$_REQUEST['room']}");
-            exit();
-        }
+    //if(!$_REQUEST['is_logged'])
+    //   {
+    //        echo '<p>Моля влезте в акаунта си.</p>';
+    //        header("Location: ../login/login.php?room_id={$_REQUEST['room']}");
+    //        exit();
+    //    }
+      
+    date_default_timezone_set('Europe/Sofia');
            
     $room_id = $_REQUEST['room'];
     $descr = loadRoomDescr($room_id);
@@ -37,6 +39,13 @@
     $next_fn = $next_team == FALSE ? FALSE : implode(', ', $next_team);
 
     $user_role = $_SESSION['user_role'];
+    $user_id = $_SESSION['user_id'];
+      
+    $user_time = getStudentTime($user_id, $room_id);
+    $now = time();
+    $time = strtotime($user_time);
+    $dif = round(($time - $now) / 60);
+    
     
     if($user_role == 1 && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
@@ -54,7 +63,7 @@
                 <p><?php echo $descr["description"] ?></p>
             </div> 
         </div>
-        <div class="panel" style="visibility:<?php echo $panel_visibility ?>">Твой ред е! url: <?php echo $descr["url"] ?> <?php echo $descr["meeting_password"] != null ? 'парола:'.$descr["meeting_password"] : ''?></div>
+        <div class="panel" style="visibility:<?php echo $panel_visibility ?>">Твой ред е! <?php echo $descr["url"] != null ? 'url: '.$descr["url"] : '' ?> <?php echo $descr["meeting_password"] != null ? 'парола:'.$descr["meeting_password"] : ''?></div>
         
         <div class="left-panel">
             <h2>Опашка чакащи</h2>
@@ -65,14 +74,18 @@
                 </div>
                 <?php if($user_role == 1): ?>
                 <div class="time">
-                    <p>Средно чакане:</p>
-                    <p>25 минути</p>
+                    <p>Оценено време за чакане:</p>
+                    <p><?php echo $dif.' минути'; ?></p>
                 </div>
                 <?php elseif($user_role == 2): ?>
                 <div class="next-btn-div">
                     <form action="queue_operations.php" method="post">
                         <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
-                        <input type="submit" name="next" value="Следващ">
+                        <input type="submit" name="next" id="next" value="Следващ">
+                        <div id="break-div">
+                            <input type="number" name="mins" id="mins"> минути
+                            <input type="submit" name="break" id="break-btn" value="Почивка">    
+                        </div>
                     </form>
                 </div>
                 <?php endif; ?>
@@ -121,6 +134,7 @@
             <?php endif; ?>
             
         </div>
+        <div class="center"></div>
         <div class="side-panel">
             <div class="chat">
                 <p>Съобщения</p>
