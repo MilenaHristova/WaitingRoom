@@ -12,9 +12,11 @@
     require_once '../connect_db.php';
     include_once 'queue_operations.php';
 
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+   if (session_status() === PHP_SESSION_NONE)
+   {
+           session_start();
+   }
+   
     
     if(!isset($_REQUEST['room']))
     {
@@ -22,15 +24,16 @@
         header("Location: ../lobby/lobby.php");
         exit();
     }
-
-    //if(!$_REQUEST['is_logged'])
-    //   {
-    //        echo '<p>Моля влезте в акаунта си.</p>';
-    //        header("Location: ../login/login.php?room_id={$_REQUEST['room']}");
-    //        exit();
-    //    }
       
     date_default_timezone_set('Europe/Sofia');
+
+    if(!isset($_SESSION['user_id']))
+        {
+            echo '<p>Моля влезте в акаунта си.</p>';
+            header("Location: ../login/login.php?room_id={$_REQUEST['room']}");
+            exit();
+        }
+
            
     $room_id = $_REQUEST['room'];
     $descr = loadRoomDescr($room_id);

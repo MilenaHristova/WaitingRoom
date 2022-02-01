@@ -1,7 +1,10 @@
 <?php
-if(session_status() === PHP_SESSION_NONE){
-session_start();
-}
+
+ if (session_status() === PHP_SESSION_NONE)
+   {
+           session_start();
+   }
+
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +24,6 @@ session_start();
 
 <?php
 if(isset($_REQUEST['room_id'])){
-//$room_id = $_REQUEST['room_id'];
 echo "<form method=\"post\" action=\"login_validation.php?room_id={$_REQUEST['room_id']}\">";
 }
 else{
@@ -41,7 +43,6 @@ echo "<form method=\"post\" action=\"login_validation.php\">";
     <input class="submit" type="submit" value="Влизане">
 <?php
 if(isset($_REQUEST['room_id'])){
-//$room_id = $_REQUEST['room_id'];
 echo "<div class=\"registration_link\"><a href=\"../registration/registration.php?room_id={$_REQUEST['room_id']}\"> Регистрирай се</a></div>";
 }
 else{

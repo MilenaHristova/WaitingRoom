@@ -1,6 +1,9 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    session_start();
+     if (session_status() === PHP_SESSION_NONE)
+       {
+               session_start();
+       }
 
     require_once '../connect_db.php';
 
@@ -102,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $statements = $pdo->query($query);
         $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION["user_id"] = $rows[0]['user_id'];
+        $_SESSION["name"] = $rows[0]["name"];
         $_SESSION["fn"] = $rows[0]['faculty_number'];
         $_SESSION["user_role"] = $rows[0]["role"];
 
@@ -109,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               header("Location: ../room/queue.php?room={$_REQUEST['room_id']}");
         }
         else{
-             header("Location: ../lobby/lobby.php?user_role={$rows[0]["role"]}&user_names={$rows[0]["name"]}");
+             header("Location: ../lobby/lobby.php");
         }
    		exit();
    }
