@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 10:48 AM
+-- Generation Time: Feb 01, 2022 at 09:55 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -46,24 +46,24 @@ CREATE TABLE `rooms` (
   `moderator_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(400) NOT NULL,
-  `url` varchar(400) NOT NULL,
-  `meeting_password` varchar(100) NOT NULL,
-  `next_fn` int(11) DEFAULT NULL
+  `url` varchar(400) DEFAULT NULL,
+  `meeting_password` varchar(100) DEFAULT NULL,
+  `break_until` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `url`, `meeting_password`, `next_fn`) VALUES
+INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `url`, `meeting_password`, `break_until`) VALUES
 (1, 1, 1, 'Защита на проекти 1-ва група', 'ееееееееее\r\nееееееееее\r\nееееееееее', '', '', NULL),
 (2, 1, 1, 'Устен изпит Кн2', 'е', '', '', NULL),
 (3, 1, 1, 'Писмен изпит ИС', '', '', '', NULL),
-(7, 5, 5, 'Стая 1', 'Описание', 'link', 'password', 81333),
-(8, 5, 5, 'Test staq', 'op', 'link', 'passw', 81444),
-(9, 5, 5, 'staq 2', 'op', 'l', 'p', 0),
+(7, 5, 5, 'Стая 1', 'Описание', 'link', 'password', NULL),
+(8, 5, 5, 'Test staq', 'op', 'link', 'passw', NULL),
+(9, 5, 5, 'staq 2', 'op', 'l', 'p', NULL),
 (11, 5, 5, 'test 3', 'op', 'link', 'p', NULL),
-(35, 5, 5, 'st 3', '', '', '', 81111);
+(35, 5, 5, 'st 3', '', '', '', '2022-02-01 23:24:00');
 
 -- --------------------------------------------------------
 
@@ -74,33 +74,34 @@ INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `descripti
 CREATE TABLE `room_student` (
   `room_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `place` int(11) NOT NULL,
   `time` datetime DEFAULT NULL,
   `waiting` tinyint(1) NOT NULL DEFAULT 1,
-  `team` int(11) DEFAULT NULL
+  `team` int(11) DEFAULT NULL,
+  `is_next` tinyint(1) NOT NULL DEFAULT 0,
+  `is_temp` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `room_student`
 --
 
-INSERT INTO `room_student` (`room_id`, `student_id`, `place`, `time`, `waiting`, `team`) VALUES
-(7, 6, 1, NULL, 0, NULL),
-(7, 7, 2, NULL, 0, NULL),
-(7, 8, 3, NULL, 0, NULL),
-(7, 9, 4, NULL, 0, NULL),
-(8, 6, 1, NULL, 0, NULL),
-(8, 7, 2, NULL, 0, NULL),
-(8, 8, 3, NULL, 0, NULL),
-(8, 9, 4, NULL, 0, NULL),
-(9, 6, 1, NULL, 0, NULL),
-(9, 7, 2, NULL, 0, NULL),
-(9, 8, 3, NULL, 0, NULL),
-(9, 9, 4, NULL, 0, NULL),
-(35, 6, 1, '2022-01-28 12:45:00', 0, 1),
-(35, 7, 2, '2022-01-29 12:45:00', 1, 1),
-(35, 8, 3, '2022-01-30 12:45:00', 1, 1),
-(35, 9, 4, '2022-01-31 12:45:00', 1, 2);
+INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `is_next`, `is_temp`) VALUES
+(7, 6, NULL, 0, NULL, 0, 0),
+(7, 7, NULL, 0, NULL, 0, 0),
+(7, 8, NULL, 0, NULL, 0, 0),
+(7, 9, NULL, 0, NULL, 0, 0),
+(8, 6, NULL, 0, NULL, 0, 0),
+(8, 7, NULL, 0, NULL, 0, 0),
+(8, 8, NULL, 0, NULL, 0, 0),
+(8, 9, NULL, 0, NULL, 0, 0),
+(9, 6, NULL, 0, NULL, 0, 0),
+(9, 7, NULL, 0, NULL, 0, 0),
+(9, 8, NULL, 0, NULL, 0, 0),
+(9, 9, NULL, 0, NULL, 1, 0),
+(35, 6, '2022-01-28 12:45:00', 0, 1, 1, 0),
+(35, 7, '2022-01-29 12:45:00', 0, 1, 1, 0),
+(35, 8, '2022-01-30 12:45:00', 0, 1, 1, 0),
+(35, 9, '2022-01-31 12:45:00', 0, 2, 0, 1);
 
 -- --------------------------------------------------------
 

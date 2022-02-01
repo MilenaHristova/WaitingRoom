@@ -93,9 +93,9 @@
                             }
                             
                             if($row[1] != ''){
-                                $t = date_parse_from_format("d/m/Y h:i", $row[1]);
+                                $t = date_parse_from_format("d/m/Y H:i", $row[1]);
                                 $tstamp = mktime($t["hour"], $t["minute"], 0, $t["month"], $t["day"], $t["year"]);
-                                $time = date("Y-m-d h:i", $tstamp);
+                                $time = date("Y-m-d H:i", $tstamp);
                             }
                             
                             

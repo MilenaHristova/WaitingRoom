@@ -3,6 +3,8 @@
 session_start();
 require_once('../connect_db.php');
 
+date_default_timezone_set('Europe/Sofia');
+
 function loadQueue($room_id, $count){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
@@ -101,9 +103,40 @@ function getStudentTime($id, $room_id){
     return $row == FALSE ? FALSE : $row['time'];
 }
 
+function setBreak($room_id, $mins){
+    $now = time();
+    $end = $now + (60 * $mins);
+    $end_time = date('Y-m-d H:i', $end);
+    
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+    $sql = 'UPDATE rooms SET break_until = '.($pdo->quote($end_time)).' WHERE room_id = '.$room_id;
+    $pdo->exec($sql);    
+}
+
+function getBreak($room_id){
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    $sql = 'SELECT break_until FROM rooms WHERE room_id = '.$room_id;
+    $st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+    
+    return $res == FALSE ? FALSE : $res['break_until'];
+}
 
 if(isset($_POST["next"])){
     updateNext($_POST["room_id"]);
+} elseif(isset($_POST["break"])){
+    $room_id = $_POST["room_id"];
+    if(!isset($_POST["mins"])){
+        header("Location: ../room/queue.php?room=".$room_id);
+        exit(); 
+    
+    }
+    setBreak($room_id, $_POST["mins"]);
+    header("Location: ../room/queue.php?room=".$room_id);
+    exit();
 }
 
 

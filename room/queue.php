@@ -48,7 +48,14 @@
     $now = time();
     $time = strtotime($user_time);
     $dif = round(($time - $now) / 60);
+      
+    $break_until = getBreak($room_id);
     
+    if($break_until == FALSE | strtotime($break_until) - time() <= 0){
+        $break_vis = 'hidden';
+    } else{
+        $break_vis = 'visible';
+    }
     
     if($user_role == 1 && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
@@ -67,6 +74,10 @@
             </div> 
         </div>
         <div class="panel" style="visibility:<?php echo $panel_visibility ?>">Твой ред е! <?php echo $descr["url"] != null ? 'url: '.$descr["url"] : '' ?> <?php echo $descr["meeting_password"] != null ? 'парола:'.$descr["meeting_password"] : ''?></div>
+        
+        <div class="break-panel" style="visibility:<?php echo $break_vis ?>">
+            <?php echo 'Почивка до '.$break_until; ?>
+        </div>
         
         <div class="left-panel">
             <h2>Опашка чакащи</h2>
