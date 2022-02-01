@@ -61,19 +61,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($length != 5){
             return "Грешен ФН";
         }
-
    }
 
    $username = $_POST["username"];
    $password = $_POST["password"];
    $names = $_POST["name"];
-   $role =  $_POST["role_options"];
    $fn =  $_POST["fn"];
 
    $username_error = test_username($username);
    $password_error = test_password($password);
    $names_error = test_names($names);
-   $fn_error = $role == "1" ? test_fn($fn) : null;
+   $fn_error = test_fn($fn);
 
    $errors = array();
    if($username_error != null){
@@ -90,9 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 
    if(empty($errors)){
-        if($role == "2"){
-            $fn = "00000";
-        }
+
         $passwd_hash = password_hash($password, PASSWORD_DEFAULT);
 
         $db = Database::getInstance();
@@ -100,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $insert_query = "INSERT INTO users (faculty_number,name, role, username, password) VALUES (?, ?, ?, ?, ?)";
         $stmt= $pdo->prepare($insert_query);
-        $stmt->execute([$fn, $names, $role, $username, $passwd_hash]);
+        $stmt->execute([$fn, $names, 1, $username, $passwd_hash]);
 
         $query = "SELECT * FROM users WHERE users.username LIKE \"$username\"";
         $statements = $pdo->query($query);
@@ -109,13 +105,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["fn"] = $rows[0]['faculty_number'];
         $_SESSION["user_role"] = $rows[0]["role"];
 
-   		require_once("../lobby/lobby.php");
-
+        if(isset($_REQUEST['room_id'])){
+              header("Location: ../room/queue.php?room={$_REQUEST['room_id']}");
+        }
+        else{
+             header("Location: ../lobby/lobby.php?user_role={$rows[0]["role"]}&user_names={$rows[0]["name"]}");
+        }
+   		exit();
    }
    else{
-   		$_SESSION["registration_errors"] = $errors;
-   		require_once("registration.php");
-   		session_unset();
+   		header("Location: registration.php?registration_errors=".urlencode(serialize($errors) . "&room_id=" . $_REQUEST['room_id']));
    }
 
 }
