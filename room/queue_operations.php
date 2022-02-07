@@ -77,8 +77,7 @@ function getNext($room_id){
     }
    
     if(empty($res)){
-        //return FALSE;
-        return array();
+        return FALSE;
     }
     
     return $res;

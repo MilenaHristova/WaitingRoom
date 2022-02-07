@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<meta http-equiv="refresh" content="60;URL='queue.php?room=<?php echo $_REQUEST['room']?>'">
+<meta http-equiv="refresh" content="10;URL='queue.php?room=<?php echo $_REQUEST['room']?>'">
 <title> Чакалня </title>
     <link rel="stylesheet" href="queue.css">
 	
@@ -59,7 +59,7 @@
         $break_vis = 'visible';
     }
     
-    if($user_role == 1 && in_array($_SESSION["fn"], $next_team)){
+    if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
     } else {
         $panel_visibility = 'hidden';
