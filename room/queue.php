@@ -50,33 +50,44 @@
     $dif = round(($time - $now) / 60);
       
     $break_until = getBreak($room_id);
+    $text = '';
     
     if($break_until == FALSE | strtotime($break_until) - time() <= 0){
-        $break_vis = 'hidden';
+        $panel_visibility = 'collapse';
     } else{
-        $break_vis = 'visible';
+        $panel_visibility = 'visible';
+        $date = new DateTime($break_until);
+        $break_until = $date->format("H:i");
+        $text = 'Почивка до '.$break_until;
     }
     
     if($user_role == 1 && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
+        $text = 'Твой ред е!';
+        if($descr["url"] != null){
+            $text = $text.'url: '.$descr["url"].' ';
+        }
+        if($descr["meeting_password"] != null){
+            $text = $text.'парола:'.$descr["meeting_password"];
+        }
     } else {
-        $panel_visibility = 'hidden';
+        $panel_visibility = 'collapse';
     }
            
     
     ?>
     <div class="container">
-        <div class="navbar">
-            <button><a href='../lobby/lobby.php'>Назад</a></button>
-            <div class="title">
-                <h1><?php echo $descr["name"] ?></h1>
+        <button><a href='../lobby/lobby.php'>Назад</a></button>
+        <div class="title">
+            <h1><?php echo $descr["name"] ?></h1>
+            
+            <div class="title">  
                 <p><?php echo $descr["description"] ?></p>
             </div> 
         </div>
-        <div class="panel" style="visibility:<?php echo $panel_visibility ?>">Твой ред е! <?php echo $descr["url"] != null ? 'url: '.$descr["url"] : '' ?> <?php echo $descr["meeting_password"] != null ? 'парола:'.$descr["meeting_password"] : ''?></div>
         
-        <div class="break-panel" style="visibility:<?php echo $break_vis ?>">
-            <?php echo 'Почивка до '.$break_until; ?>
+        <div class="panel" style="visibility:<?php echo $panel_visibility ?>">
+            <?php echo $text; ?>
         </div>
         
         <div class="left-panel">
@@ -97,23 +108,23 @@
                         <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
                         <input type="submit" name="next" id="next" value="Следващ">
                         <div id="break-div">
-                            <input type="number" name="mins" id="mins"> минути
-                            <input type="submit" name="break" id="break-btn" value="Почивка">    
+                            Почивка: <input type="number" name="mins" id="mins"> минути
+                            <input type="submit" name="break" id="break-btn" value="Ок">    
                         </div>
                     </form>
                 </div>
                 <?php endif; ?>
-            </div>
+              </div>
             
-            <div class="queue">
-                <ul class="list">
+              <div class="queue">
+                 <ul class="list">
                     <?php
                     foreach($students as $student){
                         echo '<li>'.$student["name"].', '.$student["fn"].'</li>';
                     }
                     ?>
-                </ul>
-            </div>
+                 </ul>
+              </div>
             
             <?php if($user_role == 2): ?>
             <div class="search">

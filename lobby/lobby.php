@@ -54,7 +54,7 @@ if($rows){
 
 <div class="create_room">
 <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 2) : ?>
-        <button id="create_room_btn" type="button"><a href="../create_room/create_room.html">Създай стая</a></button>
+        <button id="create_room_btn" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
 <?php endif; ?>
 </div>
 </body>

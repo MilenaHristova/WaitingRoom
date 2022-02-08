@@ -9,6 +9,11 @@
                 session_start();
             }
             
+            if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) |           $_SESSION['user_role'] != 2){
+                header("Location: ../lobby/lobby.php");
+                exit();
+            }
+            
             function random_filename($length, $directory, $extension) {    
                 do {
                     $key = '';
@@ -51,9 +56,11 @@
                 $descr = $_POST["descr"];
                 $url = $_POST["url"];
                 $passwd = $_POST["password"];
+                $type = $_POST["type"];
                 $userid = $_SESSION["user_id"];
                 
-                $query = 'INSERT INTO rooms(creator_id, moderator_id, name, description, meeting_password, url) values('.$pdo->quote($userid).','.$pdo->quote($userid).','.$pdo->quote($title).','.$pdo->quote($descr).','.$pdo->quote($passwd).','.$pdo->quote($url).')';
+                $query = 'INSERT INTO rooms(creator_id, moderator_id, name, description,
+                type, meeting_password, url) values('.$pdo->quote($userid).','.$pdo->quote($userid).','.$pdo->quote($title).','.$pdo->quote($descr).','.$pdo->quote($type).','.$pdo->quote($passwd).','.$pdo->quote($url).')';
                     
                 $pdo->exec($query);
             }
@@ -84,7 +91,6 @@
                         $inserts = array();
                         $teams = array();
                         $team_num = 1;
-                        $place = 1;
                         
                         while (($row = fgetcsv($file)) !== FALSE){
                             $fn = $row[0];
@@ -117,13 +123,12 @@
                                 continue;
                             }
                                 
-                            array_push($inserts, '('.$pdo->quote($room_id).','.$pdo->quote($id).','.$pdo->quote($place).','.$pdo->quote($time).','.$pdo->quote($team).')');
-                            $place = $place + 1;
+                            array_push($inserts, '('.$pdo->quote($room_id).','.$pdo->quote($id).','.$pdo->quote($time).','.$pdo->quote($team).')');
                         }
                             
                         if(!empty($inserts)){
                             $insert_str = implode(', ', $inserts);
-                            $query = 'INSERT INTO room_student(room_id, student_id, place, time, team) VALUES'.$insert_str.';';
+                            $query = 'INSERT INTO room_student(room_id, student_id, time, team) VALUES'.$insert_str.';';
                             $pdo->exec($query);
                         }
                             

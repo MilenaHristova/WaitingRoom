@@ -14,8 +14,8 @@ body{
     width:65%;
     float: left;
     padding-left: 20px;
-    overflow: hidden;
     text-align: center;
+    overflow: auto;
 }
 
 .center{
@@ -30,6 +30,11 @@ body{
     width: 25%;
     border: 2px solid black;
     border-radius: 25px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.title{
     text-align: center;
 }
 
@@ -75,14 +80,18 @@ body{
 }
 
 .queue{
-    margin-top: 30%;
-    width: 90%;
+    margin-top: 10%;
+    width: 50%;
     text-align: center;
+    overflow: auto;
+    padding-right: 30%;
+    height: 400px;
 }
 
 .list{
     list-style: none;
     padding: 0;
+    overflow: auto;
 }
 
 .list li{
@@ -152,7 +161,8 @@ body{
 }
 
 .search{
-    width: 100%;
+    width: 50%;
+    margin-top: 20px;
 }
 
 .search-res-div{
@@ -208,7 +218,7 @@ body{
 }
 
 #break-div{
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
 }
 
@@ -220,6 +230,20 @@ body{
 
 #break-btn{
     margin-left: 10px;
+}
+
+.panel{
+    margin-left: 40px;
+    margin-right: 40px;
+    border: 1px solid black;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    background: #ADD8E6;    
 }
 
 
