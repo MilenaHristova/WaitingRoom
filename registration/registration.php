@@ -13,6 +13,10 @@ session_start();
 </head>
 <body>
 <article>
+<div class="float_left">
+<img src="../images/login_img.jpg" alt="Login">
+</div>
+<div class="float_right">
     <h1>Регистрация</h1>
     <?php
     if(isset($_REQUEST['room_id'])){
@@ -23,24 +27,11 @@ session_start();
     echo "<form id=\"form\" action=\"registration_validation.php\" method=\"post\" >";
     }
     ?>
-        <div class="field">
-            <label for="username">Потребителско име</label>
-            <input type="text" name="username" >
-        </div>
-        <div class="field">
-            <label for="password">Парола </label>
-            <input type="password" name="password">
-        </div>
-        <div class="field">
-            <label for="name">Имена</label>
-            <input type="text" name="name">
-        </div>
-        <div class="field">
-            <label for="fn">ФН</label>
-            <input type="text" name="fn">
-        </div>
-
-        <input class="submit" type="submit" value="Регистрирай ме">
+            <input class="field" type="text" name="username" placeholder="Потребителско име">
+            <input class="field" type="password" name="password" placeholder="Парола (поне 8 символа)">
+            <input class="field" type="text" name="name" placeholder="Име и фамилия">
+            <input class="field" type="text" name="fn" placeholder="ФН">
+			<input class="submit" type="submit" value="Регистрирай ме">
 
     </form>
 
@@ -54,7 +45,16 @@ session_start();
             echo "</div>";
         }
     ?>
-
+	
+	<?php
+if(isset($_REQUEST['room_id'])){
+echo "<div class=\"login_link\"><a href=\"../login/login.php?room_id={$_REQUEST['room_id']}\"> Вече имате акаунт? Влезте в акаунта си </a> <i class=\"arrow\"></i></div>";
+}
+else{
+echo "<div class=\"login_link\"><a href=\"../login/login.php\">Вече имате акаунт? Влезте в акаунта си </a><i class=\"arrow\"></i></div>";
+}
+?>
+</div>
 </article>
 </body>
 </html>

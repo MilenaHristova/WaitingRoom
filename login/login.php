@@ -16,6 +16,10 @@
 </head>
 <body>
 <article>
+<div class="float_left">
+<img src="../images/login_img.jpg" alt="Login">
+</div>
+<div class="float_right">
 <?php if(!isset($_GET['room_id'])): ?>
     <h1>Добре дошли!</h1>
 <?php else: ?>
@@ -32,23 +36,14 @@ echo "<form method=\"post\" action=\"login_validation.php\">";
 ?>
 
 
-    <div class="field">
-    <label for="username">Потребителско име</label>
-    <input type="text" id="username" name="username">
-    </div>
-    <div class="field">
-    <label for="password">Парола </label>
-    <input type="password" id="password" name="password">
-    </div>
+
+    <input class="field" type="text" id="username" name="username" placeholder="Потребителско име">
+
+
+    <input class="field" type="password" id="password" name="password" placeholder="Парола">
+
     <input class="submit" type="submit" value="Влизане">
-<?php
-if(isset($_REQUEST['room_id'])){
-echo "<div class=\"registration_link\"><a href=\"../registration/registration.php?room_id={$_REQUEST['room_id']}\"> Регистрирай се</a></div>";
-}
-else{
-echo "<div class=\"registration_link\"><a href=\"../registration/registration.php\">Регистрирай се</a></div>";
-}
-?>
+
 
 </form>
 <?php
@@ -58,6 +53,16 @@ echo "<div class=\"registration_link\"><a href=\"../registration/registration.ph
             echo "</div>";
         }
 ?>
+
+<?php
+if(isset($_REQUEST['room_id'])){
+echo "<div class=\"registration_link\"><a href=\"../registration/registration.php?room_id={$_REQUEST['room_id']}\"> Регистрирай се </a> <i class=\"arrow\"></i></div>";
+}
+else{
+echo "<div class=\"registration_link\"><a href=\"../registration/registration.php\">Регистрирай се </a><i class=\"arrow\"></i></div>";
+}
+?>
+</div>
 </article>
 </body>
 </html>
