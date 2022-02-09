@@ -1,45 +1,33 @@
-<?php
-require '../connect_db.php';
+<! DOCTYPE html>
+<html>
+    <div class="search">
+        <form action="" method="post">
+            <label for="fn">Факултетен номер</label>
+            <input type="text" name="fn" id="fn">
+            <input type="submit" name="search" value="Търсене">
+        </form>
+        <div class="search-res-div">
+            <?php
+                if(isset($_POST["search"])){
+                    $fn = $_POST["fn"];
+                    $res = searchByFn($fn);
+                    if($res == FALSE){
+                        echo '<p class="search-res">Не е намерен резултат.</p>';
+                    } else { ?>
+                        <p class="search-res"><?php echo $res["name"] ?></p>
+                        <form action="invite.php" method="post">
+                            <input type="hidden" name="student_id" value="<?php echo $res["user_id"] ?>">
+                            <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+                            <input type="submit" name="invite_temp" value="Покани временно">
+                            <input type="submit" name="invite" value="Покани постоянно">
+                        </form>
+            <?php
+                    }
+                        
+                }
+                    
+            ?>
 
-if(isset($_POST["invite_temp"])){
-    $id = $_POST["student_id"];
-    $room_id = $_POST["room_id"];
-    
-    $db = Database::getInstance();
-    $pdo = $db->getConnection();
-    
-    $sql = 'UPDATE room_student 
-    SET is_next = FALSE WHERE room_id = '.$room_id.';';
-       $pdo->exec($sql);
-    
-    $sql = 'UPDATE room_student SET is_next = TRUE WHERE room_id = '.$room_id.' AND student_id = '.$id;
-    
-    $pdo->exec($sql);
-    
-    header("Location: ../room/queue.php?room=".$room_id);
-    exit();
-} elseif(isset($_POST["invite"])){
-    $id = $_POST["student_id"];
-    $room_id = $_POST["room_id"];
-    
-    $db = Database::getInstance();
-    $pdo = $db->getConnection();
-    
-    $sql = 'UPDATE room_student 
-    SET is_next = FALSE WHERE room_id = '.$room_id.';';
-       $pdo->exec($sql);
-    
-    $sql = 'UPDATE room_student SET is_next = TRUE, waiting = FALSE WHERE room_id = '.$room_id.' AND student_id = '.$id;
-    
-    $pdo->exec($sql);
-    
-    header("Location: ../room/queue.php?room=".$room_id);
-    exit();
-}
-
-
-
-
-
-
-?>
+        </div>
+    </div>
+</html>

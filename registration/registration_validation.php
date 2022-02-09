@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["user_role"] = $rows[0]["role"];
 
         if(isset($_REQUEST['room_id'])){
-              header("Location: ../room/queue.php?room={$_REQUEST['room_id']}");
+              header("Location: ../room/room.php?room={$_REQUEST['room_id']}");
         }
         else{
              header("Location: ../lobby/lobby.php");

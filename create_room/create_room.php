@@ -147,7 +147,7 @@
                     }  
                 }
                     
-                header("Location: ../room/queue.php?room=".$room_id);
+                header("Location: ../room/room.php?room=".$room_id);
                 exit();
                     
             } catch(PDOException $e){

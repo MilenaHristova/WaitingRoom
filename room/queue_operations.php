@@ -9,7 +9,7 @@ function loadQueue($room_id, $count){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
-    $query = 'SELECT user_id, u.name, faculty_number FROM users u
+    $query = 'SELECT user_id, u.name, faculty_number, rs.time FROM users u
          JOIN room_student rs ON u.user_id = rs.student_id
          WHERE rs.room_id = '.$room_id.' AND rs.waiting = TRUE LIMIT '.$count.';';
     
@@ -17,7 +17,13 @@ function loadQueue($room_id, $count){
     
     $st = $pdo->query($query);
     while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
-        array_push($res, array("name" => $row["name"], "fn" => $row["faculty_number"]));
+        if($row["time"] == null | $row["time"] == ''){
+            $time = null;
+        } else {
+            $time = date('H:i', strtotime($row["time"]));
+        }
+        
+        array_push($res, array("id" => $row["user_id"], "name" => $row["name"], "fn" => $row["faculty_number"], "time" => $time));
     }
     
     return $res;
@@ -51,10 +57,10 @@ function updateNext($room_id){
        $pdo->exec($query);
     
     $query = 'UPDATE room_student 
-    SET is_next = TRUE, waiting = FALSE WHERE room_id = '.$room_id.' AND team = '.($curr + 1).' AND waiting = TRUE';
+    SET is_next = TRUE, in_room = TRUE, waiting = FALSE WHERE room_id = '.$room_id.' AND team = '.($curr + 1).' AND waiting = TRUE';
     $pdo->exec($query);
     
-    header("Location: queue.php?room=".$room_id);
+    header("Location: room.php?room=".$room_id);
     exit();
 }
 
@@ -71,6 +77,28 @@ function getNext($room_id){
     $res = array();
     while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
         array_push($res, $row["faculty_number"]);
+    }
+   
+    if(empty($res)){
+        return FALSE;
+    }
+    
+    return $res;
+}
+
+function getInRoom($room_id){
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+    $sql = 'SELECT user_id, faculty_number, name FROM users u 
+            JOIN room_student rs ON u.user_id = rs.student_id
+            WHERE rs.room_id = '.$room_id.' AND rs.in_room = TRUE';
+    
+    $st = $pdo->query($sql);
+    
+    $res = array();
+    while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
+        array_push($res, array("fn" => $row["faculty_number"], "name" => $row["name"], "id" => $row["user_id"]));
     }
    
     if(empty($res)){
@@ -127,12 +155,12 @@ if(isset($_POST["next"])){
 } elseif(isset($_POST["break"])){
     $room_id = $_POST["room_id"];
     if(!isset($_POST["mins"])){
-        header("Location: ../room/queue.php?room=".$room_id);
+        header("Location: ../room/room.php?room=".$room_id);
         exit(); 
     
     }
     setBreak($room_id, $_POST["mins"]);
-    header("Location: ../room/queue.php?room=".$room_id);
+    header("Location: ../room/room.php?room=".$room_id);
     exit();
 }
 

@@ -10,8 +10,16 @@ body{
     width: 100%;
 }
 
+.left-panel-admin{
+    width:40%;
+    float: left;
+    padding-left: 20px;
+    text-align: center;
+    overflow: auto;
+}
+
 .left-panel{
-    width:65%;
+    width:60%;
     float: left;
     padding-left: 20px;
     text-align: center;
@@ -24,6 +32,14 @@ body{
     padding-left: 20px;
     text-align: center;
 }
+
+.in-room ol li{
+    padding: 0;
+    text-align: left;
+    margin-top: 5px;
+}
+
+
 
 .side-panel{
     float: left;
@@ -80,11 +96,11 @@ body{
 }
 
 .queue{
-    margin-top: 10%;
-    width: 50%;
+    margin-top: 10px;
+    width: 70%;
     text-align: center;
     overflow: auto;
-    padding-right: 30%;
+    padding-right: 10px;
     height: 400px;
 }
 
@@ -242,9 +258,8 @@ body{
     width: 50px;
 }
 
-#break-div{
-    margin-top: 30px;
-    width: 100%;
+.break-div{
+    margin-left: 20px;
 }
 
 #next{

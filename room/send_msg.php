@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$stmt= $pdo->prepare($insert_query);
     $stmt->execute([$room_id, $text, $author_id, $author_name, $send_to, $time]);
 	
-	header("Location: queue.php?room=$room_id");
+	header("Location: room.php?room=$room_id");
 	
 }
 ?>

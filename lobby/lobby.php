@@ -42,10 +42,16 @@ $statements = $pdo->query($query);
 $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
 if($rows){
     foreach($rows as $row){
+        if($_SESSION["user_role"] == 2){
+            $str = "<button class=\"join_button\" type=\"button\"><a href=\"../room/room_admin.php?room={$row['room_id']}\">Влез</a></button>";
+        } elseif($_SESSION["user_role"] == 1){
+            $str = "<button class=\"join_button\" type=\"button\"><a href=\"../room/room.php?room={$row['room_id']}\">Влез</a></button>";
+        }
+        
         echo "<div class=\"room\">
         <p>Име на стая: {$row['name']}</p>
         <p>Описание: {$row['description']}</p>
-        <button class=\"join_button\" type=\"button\"><a href=\"../room/queue.php?room={$row['room_id']}\">Влез</a></button>
+        {$str}
         </div>";
     }
 }

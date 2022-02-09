@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2022 at 09:19 AM
+-- Generation Time: Feb 09, 2022 at 06:29 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -46,7 +46,8 @@ INSERT INTO `messages` (`msg_id`, `room_id`, `text`, `author_id`, `author_name`,
 (27, 35, 'това се вижда от всички', 5, 'Милен Петров', 0, '2022-02-07 10:15:37'),
 (28, 35, 'това се вижда само от преподаватели и Студент 1', 6, 'Студент Едно', 1, '2022-02-07 10:18:01'),
 (29, 35, 'това се вижда от всички', 6, 'Студент Едно', 0, '2022-02-07 10:18:27'),
-(30, 35, 'hey', 7, 'Студент Две', 0, '2022-02-07 10:19:33');
+(30, 35, 'hey', 7, 'Студент Две', 0, '2022-02-07 10:19:33'),
+(0, 40, 'test', 6, 'Студент Едно', 0, '2022-02-09 03:59:25');
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,8 @@ INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `descripti
 (2, 1, 1, 'Устен изпит Кн2', 'е', NULL, '', '', NULL),
 (3, 1, 1, 'Писмен изпит ИС', '', NULL, '', '', NULL),
 (7, 5, 5, 'Стая 1', 'Описание', NULL, 'link', 'password', NULL),
-(8, 5, 5, 'Test staq', 'op', NULL, 'link', 'passw', NULL);
+(8, 5, 5, 'Test staq', 'op', NULL, 'link', 'passw', NULL),
+(40, 5, 5, 'Стая', 'Стая', 'project_defense', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,6 +91,8 @@ CREATE TABLE `room_student` (
   `time` datetime DEFAULT NULL,
   `waiting` tinyint(1) NOT NULL DEFAULT 1,
   `team` int(11) DEFAULT NULL,
+  `in_room` tinyint(1) NOT NULL DEFAULT 0,
+  `is_temp` tinyint(1) NOT NULL DEFAULT 0,
   `is_next` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -96,15 +100,29 @@ CREATE TABLE `room_student` (
 -- Dumping data for table `room_student`
 --
 
-INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `is_next`) VALUES
-(7, 6, NULL, 0, NULL, 0),
-(7, 7, NULL, 0, NULL, 0),
-(7, 8, NULL, 0, NULL, 0),
-(7, 9, NULL, 0, NULL, 0),
-(8, 6, NULL, 0, NULL, 0),
-(8, 7, NULL, 0, NULL, 0),
-(8, 8, NULL, 0, NULL, 0),
-(8, 9, NULL, 0, NULL, 0);
+INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `in_room`, `is_temp`, `is_next`) VALUES
+(7, 6, NULL, 0, NULL, 0, 0, 0),
+(7, 7, NULL, 0, NULL, 0, 0, 0),
+(7, 8, NULL, 0, NULL, 0, 0, 0),
+(7, 9, NULL, 0, NULL, 0, 0, 0),
+(8, 6, NULL, 0, NULL, 0, 0, 0),
+(8, 7, NULL, 0, NULL, 0, 0, 0),
+(8, 8, NULL, 0, NULL, 0, 0, 0),
+(8, 9, NULL, 0, NULL, 0, 0, 0),
+(40, 6, '2022-01-28 12:45:00', 0, 1, 0, 0, 0),
+(40, 7, '2022-01-29 12:45:00', 0, 2, 1, 0, 0),
+(40, 8, '2022-01-30 12:45:00', 0, 3, 0, 0, 0),
+(40, 9, '2022-01-31 12:45:00', 0, 4, 0, 0, 1),
+(40, 10, '2022-02-01 12:45:00', 1, 5, 0, 0, 0),
+(40, 11, '2022-02-02 12:45:00', 1, 6, 0, 0, 0),
+(40, 12, '2022-02-03 12:45:00', 1, 7, 0, 0, 0),
+(40, 13, '2022-02-04 12:45:00', 1, 8, 0, 0, 0),
+(40, 14, '2022-02-05 12:45:00', 1, 9, 0, 0, 0),
+(40, 15, '2022-02-06 12:45:00', 0, 10, 0, 0, 0),
+(40, 16, '2022-02-07 12:45:00', 1, 11, 0, 0, 0),
+(40, 17, '2022-02-08 12:45:00', 1, 12, 0, 0, 0),
+(40, 18, '2022-02-09 12:45:00', 1, 13, 0, 0, 0),
+(40, 19, '2022-02-10 12:45:00', 1, 14, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -178,7 +196,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
