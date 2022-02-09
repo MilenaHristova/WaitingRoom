@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2022 at 02:22 PM
+-- Generation Time: Feb 09, 2022 at 09:19 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -75,14 +75,7 @@ INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `descripti
 (2, 1, 1, 'Устен изпит Кн2', 'е', NULL, '', '', NULL),
 (3, 1, 1, 'Писмен изпит ИС', '', NULL, '', '', NULL),
 (7, 5, 5, 'Стая 1', 'Описание', NULL, 'link', 'password', NULL),
-(8, 5, 5, 'Test staq', 'op', NULL, 'link', 'passw', NULL),
-(9, 5, 5, 'staq 2', 'op', NULL, 'l', 'p', NULL),
-(11, 5, 5, 'test 3', 'op', NULL, 'link', 'p', NULL),
-(35, 5, 5, 'st 3', '', NULL, '', '', '2022-02-04 15:25:00'),
-(36, 5, 5, 'test', 'opisanie', NULL, '', '', NULL),
-(37, 5, 5, 'test', 'opisanie', NULL, '', '', NULL),
-(38, 5, 5, 'test2 ', 'opisanie', NULL, '', '', '2022-02-04 19:21:00'),
-(39, 5, 5, 'test3', 'op', 'project_defense', '', '', NULL);
+(8, 5, 5, 'Test staq', 'op', NULL, 'link', 'passw', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,55 +89,22 @@ CREATE TABLE `room_student` (
   `time` datetime DEFAULT NULL,
   `waiting` tinyint(1) NOT NULL DEFAULT 1,
   `team` int(11) DEFAULT NULL,
-  `is_next` tinyint(1) NOT NULL DEFAULT 0,
-  `is_temp` tinyint(1) NOT NULL DEFAULT 0
+  `is_next` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `room_student`
 --
 
-INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `is_next`, `is_temp`) VALUES
-(7, 6, NULL, 0, NULL, 0, 0),
-(7, 7, NULL, 0, NULL, 0, 0),
-(7, 8, NULL, 0, NULL, 0, 0),
-(7, 9, NULL, 0, NULL, 0, 0),
-(8, 6, NULL, 0, NULL, 0, 0),
-(8, 7, NULL, 0, NULL, 0, 0),
-(8, 8, NULL, 0, NULL, 0, 0),
-(8, 9, NULL, 0, NULL, 0, 0),
-(9, 6, NULL, 0, NULL, 0, 0),
-(9, 7, NULL, 0, NULL, 0, 0),
-(9, 8, NULL, 0, NULL, 0, 0),
-(9, 9, NULL, 0, NULL, 1, 0),
-(35, 6, '2022-01-28 12:45:00', 0, 1, 1, 0),
-(35, 7, '2022-01-29 12:45:00', 0, 1, 1, 0),
-(35, 8, '2022-01-30 12:45:00', 0, 1, 1, 0),
-(35, 9, '2022-01-31 12:45:00', 0, 2, 0, 1),
-(37, 6, '2022-01-28 12:45:00', 0, 1, 1, 0),
-(37, 7, '2022-01-29 12:45:00', 0, 1, 1, 0),
-(37, 8, '2022-01-30 12:45:00', 0, 1, 1, 0),
-(37, 9, '2022-01-31 12:45:00', 1, 2, 0, 0),
-(37, 10, '2022-02-01 12:45:00', 1, 3, 0, 0),
-(37, 11, '2022-02-02 12:45:00', 1, 4, 0, 0),
-(37, 12, '2022-02-03 12:45:00', 1, 5, 0, 0),
-(37, 13, '2022-02-04 12:45:00', 1, 6, 0, 0),
-(37, 14, '2022-02-05 12:45:00', 1, 7, 0, 0),
-(37, 15, '2022-02-06 12:45:00', 1, 8, 0, 0),
-(38, 6, '2022-01-28 12:45:00', 0, 1, 1, 0),
-(38, 7, '2022-01-29 12:45:00', 1, 2, 0, 0),
-(38, 8, '2022-01-30 12:45:00', 1, 3, 0, 0),
-(38, 9, '2022-01-31 12:45:00', 1, 4, 0, 0),
-(38, 10, '2022-02-01 12:45:00', 1, 5, 0, 0),
-(38, 11, '2022-02-02 12:45:00', 1, 6, 0, 0),
-(38, 12, '2022-02-03 12:45:00', 1, 7, 0, 0),
-(38, 13, '2022-02-04 12:45:00', 1, 8, 0, 0),
-(38, 14, '2022-02-05 12:45:00', 1, 9, 0, 0),
-(38, 15, '2022-02-06 12:45:00', 1, 10, 0, 0),
-(38, 16, '2022-02-07 12:45:00', 1, 11, 0, 0),
-(38, 17, '2022-02-08 12:45:00', 1, 12, 0, 0),
-(38, 18, '2022-02-09 12:45:00', 1, 13, 0, 0),
-(38, 19, '2022-02-10 12:45:00', 1, 14, 0, 0);
+INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `is_next`) VALUES
+(7, 6, NULL, 0, NULL, 0),
+(7, 7, NULL, 0, NULL, 0),
+(7, 8, NULL, 0, NULL, 0),
+(7, 9, NULL, 0, NULL, 0),
+(8, 6, NULL, 0, NULL, 0),
+(8, 7, NULL, 0, NULL, 0),
+(8, 8, NULL, 0, NULL, 0),
+(8, 9, NULL, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -241,7 +201,7 @@ ALTER TABLE `rooms`
 -- Constraints for table `room_student`
 --
 ALTER TABLE `room_student`
-  ADD CONSTRAINT `room_student_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`),
+  ADD CONSTRAINT `room_student_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `room_student_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 

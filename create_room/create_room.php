@@ -27,29 +27,28 @@
                 return $directory.$key.'.'.$extension;
             }
             
-            function uploadFile($target_dir){
+            function uploadFile($target_dir, &$form_errors){
                 $file = $target_dir.basename($_FILES["students"]["name"]);
                 $file_type = strtolower(pathinfo($file,PATHINFO_EXTENSION));
                 $target_file = random_filename(10, $target_dir, $file_type);
                 $ok = 1;
                         
-                if ($_FILES["students"]["size"] > 500000) {
-                    echo "Файлът е прекалено голям.";
+                if($file_type != "csv") {
+                    $form_errors["file_type"] = "Само csv файлове се подържат. ";
+                    $ok = 0;
+                } elseif ($_FILES["students"]["size"] > 500000) {
+                    $form_errors["file_size"] = "Файлът е прекалено голям. ";
                     $ok = 0;
                 }
                         
-                if($file_type != "csv") {
-                    echo "Само csv файлове се подържат.";
-                    $ok = 0;
-                } 
-                        
                 if ($ok == 0 || !move_uploaded_file($_FILES["students"]["tmp_name"], $target_file)){
-                    echo "Неуспешно качване на файл.";
+                    $form_errors["file"] = "Неуспешно качване на файл.";
                     return null;
                 } 
                 
                 return $target_file;
             }
+            
             
             function insertRoomDetails($pdo){
                 $title = $_POST["title"];
@@ -60,9 +59,10 @@
                 $userid = $_SESSION["user_id"];
                 
                 $query = 'INSERT INTO rooms(creator_id, moderator_id, name, description,
-                type, meeting_password, url) values('.$pdo->quote($userid).','.$pdo->quote($userid).','.$pdo->quote($title).','.$pdo->quote($descr).','.$pdo->quote($type).','.$pdo->quote($passwd).','.$pdo->quote($url).')';
-                    
-                $pdo->exec($query);
+                type, meeting_password, url) values(?, ?, ?, ?, ?, ?, ?)';
+                
+                $stmt= $pdo->prepare($query);
+                $stmt->execute([$userid, $userid, $title, $descr, $type, $passwd, $url]);
             }
             
             
@@ -72,9 +72,23 @@
             if(!isset($_POST["submit"])){
                 exit();
             }
+            
+            $errors = array();
+                
+            if(!isset($_POST['title']) | $_POST['title'] == ''){
+                $errors['title'] = 'Заглавието е задължително поле.';
+                
+                header("Location: create_room_form.php?form_errors=".urlencode(serialize($errors)));
+                exit();
+            }
                       
-            if(isset($_FILES["students"])){
-                $target_file = uploadFile($target_dir);
+            if(!empty($_FILES) & $_FILES["students"]["size"] > 0){
+                $target_file = uploadFile($target_dir, $errors);
+                
+                if($target_file == null){
+                    header("Location: create_room_form.php?form_errors=".urlencode(serialize($errors)));
+                    exit();
+                }
             }   
             
             $db = Database::getInstance();
@@ -91,6 +105,7 @@
                         $inserts = array();
                         $teams = array();
                         $team_num = 1;
+                        $insert_sql = 'INSERT INTO room_student(room_id, student_id, time, team) VALUES (?, ?, ?, ?)';
                         
                         while (($row = fgetcsv($file)) !== FALSE){
                             $fn = $row[0];
@@ -123,16 +138,11 @@
                                 continue;
                             }
                                 
-                            array_push($inserts, '('.$pdo->quote($room_id).','.$pdo->quote($id).','.$pdo->quote($time).','.$pdo->quote($team).')');
+                            $stmt= $pdo->prepare($insert_sql);
+                            $stmt->execute([$room_id, $id, $time, $team]);
                         }
                             
-                        if(!empty($inserts)){
-                            $insert_str = implode(', ', $inserts);
-                            $query = 'INSERT INTO room_student(room_id, student_id, time, team) VALUES'.$insert_str.';';
-                            $pdo->exec($query);
-                        }
-                            
-                        $query = 'UPDATE room_student SET is_next = TRUE WHERE team = 1';
+                        $query = 'UPDATE room_student SET is_next = TRUE, waiting = FALSE WHERE team = 1';
                         $pdo->exec($query);
                     }  
                 }
@@ -141,8 +151,10 @@
                 exit();
                     
             } catch(PDOException $e){
-                echo 'failed';
-                echo $e->getMessage();
+                $form_errors['db'] = 'Неуспешен запис.';
+                    
+                header("Location: create_room_form.php?form_errors=".urlencode(serialize($errors)));
+                exit();
             }
             ?>
         </p>

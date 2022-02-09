@@ -232,15 +232,6 @@ body{
     border-radius: 25px;
 }
 
-.create-form{
-    margin-left: 30%;
-    width: 40%;
-}
-
-.create-form form label{
-    margin-right: 20px;
-}
-
 .title{
     text-align: center;
     align-content: center;

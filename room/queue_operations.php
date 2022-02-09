@@ -9,9 +9,6 @@ function loadQueue($room_id, $count){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
-    $query = 'UPDATE room_student SET waiting = FALSE WHERE room_id = '.$room_id.' AND is_next = TRUE';
-    $pdo->exec($query);
-    
     $query = 'SELECT user_id, u.name, faculty_number FROM users u
          JOIN room_student rs ON u.user_id = rs.student_id
          WHERE rs.room_id = '.$room_id.' AND rs.waiting = TRUE LIMIT '.$count.';';
@@ -39,7 +36,7 @@ function updateNext($room_id){
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
-    $query = 'SELECT team FROM room_student WHERE room_id = '.$room_id.' AND is_next = TRUE AND is_temp = FALSE;';
+    $query = 'SELECT team FROM room_student WHERE room_id = '.$room_id.' AND is_next = TRUE;';
     $st = $pdo->query($query);
     $result = $st->fetch(PDO::FETCH_ASSOC);
     
@@ -54,7 +51,7 @@ function updateNext($room_id){
        $pdo->exec($query);
     
     $query = 'UPDATE room_student 
-    SET is_next = TRUE WHERE room_id = '.$room_id.' AND team = '.($curr + 1).';';
+    SET is_next = TRUE, waiting = FALSE WHERE room_id = '.$room_id.' AND team = '.($curr + 1).' AND waiting = TRUE';
     $pdo->exec($query);
     
     header("Location: queue.php?room=".$room_id);

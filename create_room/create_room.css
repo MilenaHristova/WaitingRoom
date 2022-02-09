@@ -1,0 +1,70 @@
+body{
+    background-color: #FBE8A6;
+    color: #303C6C;
+}
+
+.navbar button{
+    border-radius: 10px;
+    width: 70px;
+    background-color: #303C6C;
+    color: #FBE8A6;
+}
+
+.navbar button a{
+    text-decoration: none;
+    color: #FBE8A6;
+}
+
+.errors{
+    text-align: center;
+    color: red;
+}
+
+.title{
+    text-align: center;
+}
+
+.submit{
+    text-align: center;
+}
+
+.button-ok{
+    border-radius: 10px;
+    width: 100px;
+    padding: 5px;
+    margin-top: 20px;
+    background-color: #303C6C;
+    color: #FBE8A6;
+}
+
+.create-form{
+    margin-left: 25%;
+    margin-top: 10%;
+    width: 55%;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    background-color: #F4976C;
+}
+
+.create-form div{
+    margin-bottom: 5px;
+}
+
+.input{
+    border-radius: 5px;
+    border: 2px solid #FBE8A6;
+    background-color: #FBE8A6;
+    outline: none;
+}
+
+.input:focus{
+    border-radius: 5px;
+    border: 2px solid #303C6C;
+    background-color: #FBE8A6;
+}
+
+.create-form form label{
+    margin-right: 20px;
+}
