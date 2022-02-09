@@ -16,10 +16,10 @@
 <header>
     <?php if(!isset($_SESSION["name"])) : ?>
     <form method="get" action="../registration/registration.php">
-            <button  type="submit" class="registration_button">Регистрирай се</button>
+            <button  type="submit" class="header_button">Регистрирай се</button>
     </form>
     <form method="get" action="../login/login.php">
-        <button type="submit" class="login_button">Влез в акаунт</button>
+        <button type="submit" class="header_button">Влез в акаунт</button>
     </form>
     <?php else: ?>
      <?php
@@ -27,9 +27,14 @@
         echo "<p>Добре дошли, {$_SESSION["name"]}</p>";
      ?>
      <form method="get" action="exit_lobby.php">
-                 <button  type="submit" class="exit_button">Излез</button>
+                 <button  type="submit" class="header_button">Излез</button>
      </form>
     <?php endif; ?>
+	<div class="create_room">
+	<?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 2) : ?>
+        <button class="header_button" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
+	<?php endif; ?>
+	</div>
 </header>
 
 <div class="rooms_list">
@@ -52,8 +57,8 @@ if($rows){
         }
         
         echo "<div class=\"room\">
-        <p>Име на стая: {$row['name']}</p>
-        <p>Описание: {$row['description']}</p>
+        <div class=\"room_name\"><p>{$row['name']}</p></div>
+        <div class=\"room_description\"><p>{$row['description']}</p></div>
         {$str}
         </div>";
     }
@@ -61,10 +66,6 @@ if($rows){
 ?>
 </div>
 
-<div class="create_room">
-<?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 2) : ?>
-        <button id="create_room_btn" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
-<?php endif; ?>
-</div>
+
 </body>
 </html>
