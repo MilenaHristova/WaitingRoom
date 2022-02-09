@@ -2,6 +2,7 @@
 <head>
 <meta charset="UTF-8"/>
 <title> Чакалня </title>
+    <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="create_room.css">
 </head>
 
@@ -18,11 +19,11 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
 }
 
 ?>
+    <div class="navbar">
+        <button><a href="../lobby/lobby.php">Изход</a></button>
+    </div>
+    <article>
     <div class="container">
-        <div class="navbar">
-            <button><a href="../lobby/lobby.php">Изход</a></button>
-        </div>
-        
         <div class="create-form">
             <h2 class="title">Създаване на стая</h2>
             <form action="create_room.php" method="post" enctype="multipart/form-data">
@@ -75,6 +76,8 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
         }
     ?>
     </div>
+        
+</article>
     
     
 
