@@ -33,7 +33,9 @@
         
         <div class="break-div">
             <form action="queue_operations.php" method="post">
-                Почивка: <input type="number" name="mins" id="mins" class="field" placeholder="минути"> 
+                Почивка: 
+				<input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+				<input type="number" name="mins" id="mins" class="field" placeholder="минути"> 
                 <input type="submit" name="break" id="break-btn" class="blue_button" value="Ок"> 
             </form>
         </div>

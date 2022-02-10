@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<!--<meta http-equiv="refresh" content="10;URL='room.php?room=<?php echo $_REQUEST['room']?>'">-->
+<meta http-equiv="refresh" content="10;URL='room.php?room=<?php echo $_REQUEST['room']?>'">
 <title> Чакалня </title>
     <link rel="stylesheet" href="room.css">
 	<link rel="stylesheet" href="../common.css">	
@@ -47,16 +47,14 @@
     $break_until = getBreak($room_id);
     $text = '';
     
-    if($break_until == FALSE | strtotime($break_until) - time() <= 0){
-        $panel_visibility = 'collapse';
-    } else{
+    if(!($break_until == FALSE | strtotime($break_until) - time() <= 0))
+    {
         $panel_visibility = 'visible';
         $date = new DateTime($break_until);
         $break_until = $date->format("H:i");
         $text = 'Почивка до '.$break_until;
-    }
-    
-    if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
+    } 
+    else if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
         $text = 'Твой ред е!';
         if($descr["url"] != null){
@@ -78,9 +76,9 @@
         <p class="descr">(<?php echo $descr["description"] ?>)</p>   
     </header>
     
-    <!--<div class="panel" style="visibility:<?php echo $panel_visibility ?>">
+    <div class="turn-or-break-message" style="visibility:<?php echo $panel_visibility ?>">
             <?php echo $text; ?>
-    </div>-->
+    </div>
     <?php 
     
     if($user_role == 2){
