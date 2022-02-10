@@ -19,12 +19,14 @@
 			 	            } else{
 			 	               $msg_class="msg_to";
 			 	            }
+                            
+                            $time = date("H:i", strtotime($msg['time']));
 								
 				            echo "
 				            <div class=$msg_class>
-				            <span class=\"author\">{$msg['author_name']}</span>
 				            <span class=\"msg_text\">{$msg['text']}</span>
-				            <span class=\"msg_time\">{$msg['time']}</span>
+                            <div class=\"msg\"><span class=\"author\">{$msg['author_name']}</span>
+				            <span class=\"msg_time\">{$time}</span></div>
 				            </div>
 				            ";
 				        }
