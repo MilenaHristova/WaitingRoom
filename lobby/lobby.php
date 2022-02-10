@@ -48,18 +48,10 @@ $rows = $statements->fetchAll(PDO::FETCH_ASSOC);
 
 if($rows){
     foreach($rows as $row){
-        if(isset($_SESSION["user_role"]) && $_SESSION["user_role"] == 1){
-            $str = "<button class=\"join_button\" type=\"button\"><a href=\"../room/room.php?room={$row['room_id']}\">Влез</a></button>";
-        } elseif(isset($_SESSION["user_role"]) && $_SESSION["user_role"] == 2){
-            $str = "<button class=\"join_button\" type=\"button\"><a href=\"../room/room_admin.php?room={$row['room_id']}\">Влез</a></button>";
-        } else {
-            $str = '';
-        }
-        
         echo "<div class=\"room\">
         <div class=\"room_name\"><p>{$row['name']}</p></div>
         <div class=\"room_description\"><p>{$row['description']}</p></div>
-        {$str}
+        <button class=\"join_button\" type=\"button\"><a href=\"../room/room.php?room={$row['room_id']}\">Влез</a></button>
         </div>";
     }
 }

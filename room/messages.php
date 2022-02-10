@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <div class="chat">
-        <p>Съобщения</p>
+        <h2>Съобщения</h2>
         <div class="messages" id="messages">
             <div>
                 <?php
@@ -44,7 +44,7 @@
             <label for="all">до всички</label>
             <input type="radio" name="send_to" id="teacher" value="1">
             <label for="teacher">до преподавател</label>
-            <input type="submit" class="msg-submit-btn" value="Изпрати">
+            <input type="submit" class="blue_button" value="Изпрати">
         </form>
     </div>
 </html>

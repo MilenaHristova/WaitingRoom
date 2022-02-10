@@ -2,8 +2,8 @@
 <head>
 <meta charset="UTF-8"/>
 <title> Чакалня </title>
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="create_room.css">
+    <link rel="stylesheet" href="create.css">
+    <link rel="stylesheet" href="../common.css">
 </head>
 
 <body>
@@ -18,26 +18,24 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
     exit();
 }
 
-?>
-    <div class="navbar">
-        <button><a href="../lobby/lobby.php">Изход</a></button>
-    </div>
-    <article>
+?> 
+    <header>
+        <form method="get" action="../lobby/lobby.php">
+            <button  type="submit" class="header_button">Излез</button>
+        </form>
+    </header>
     <div class="container">
         <div class="create-form">
-            <h2 class="title">Създаване на стая</h2>
+            <h1 class="title">Създаване на стая</h1>
             <form action="create_room.php" method="post" enctype="multipart/form-data">
                 <div>
-                    <label for="title">Име: </label>
-                    <input type="text" name="title" id="title" class="input">
+                    <input type="text" name="title" id="title" class="field" placeholder="Име">
                 </div>
                 <div>
-                    <label for="descr">Описание: </label>
-                    <input type="text" name="descr" id="descr" class="input">
+                    <input type="text" name="descr" id="descr" class="field" placeholder="Описание">
                 </div>
                 <div>
-                    <div>
-                        <label for="descr">Вид: </label>
+                    <div class="row">
                         <input type="radio" name="type" id="project_defense" value="project_defense">
                         <label for="project_defense">Защита на проект</label>
                         <input type="radio" name="type" id="referat" value="referat">
@@ -48,25 +46,22 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
                     
                 </div>
                 <div>
-                    <label for="url">Линк към срещата (за онлайн стаи): </label>
-                    <input type="text" name="url" id="url" class="input">
+                    <input type="text" name="url" id="url" class="field" placeholder="Линк към срещата (за онлайн стаи)">
                 </div>
                 <div>
-                    <label for="password">Парола за срещата (за онлайн стаи): </label>
-                    <input type="text" name="password" id="password" class="input">
+                    <input type="text" name="password" id="password" class="field" placeholder="Парола за срещата (за онлайн стаи)">
                 </div>
-                <div>
+                <div class="row">
                     <label for="file">Списък със студенти: </label>
                     <input type="file" name="students" id="students" class="button-upload">
                 </div>
-                <div class="submit">
-                    <input type="submit" name="submit" value="Напред" class="button-ok">
+                <div>
+                    <input class="submit" type="submit" name="submit" value="Напред">
                 </div> 
             </form>
         </div>
-    </div>
-    
-    <div class="errors">
+        
+        <div class="errors">
     <?php
         if(isset($_REQUEST["form_errors"])){
             $errors = unserialize(urldecode($_REQUEST["form_errors"]));
@@ -77,7 +72,9 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
     ?>
     </div>
         
-</article>
+    </div>
+    
+    
     
     
 

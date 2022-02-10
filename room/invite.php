@@ -1,6 +1,11 @@
 <?php
 require '../connect_db.php';
 
+if (session_status() === PHP_SESSION_NONE)
+{
+    session_start();
+}
+
 function isStudentInRoom($room_id, $student_id, $pdo){
     $sql = 'SELECT * FROM room_student WHERE room_id = '.$room_id.' AND student_id = '.$student_id;
     
@@ -10,6 +15,11 @@ function isStudentInRoom($room_id, $student_id, $pdo){
 }
 
 if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
+    if(!isset($_SESSION['user_role']) | $_SESSION['user_role'] == 1){
+        header("Location: ../lobby/lobby.php");
+        exit();
+    } 
+    
     $id = $_POST["student_id"];
     $room_id = $_POST["room_id"];
     
@@ -22,13 +32,9 @@ if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
         $waiting = 0;
     }
     
-    $sql = 'UPDATE room_student 
-    SET is_next = FALSE WHERE room_id = '.$room_id.';';
-    $pdo->exec($sql);
-    
     if(isStudentInRoom($room_id, $id, $pdo)){
         $sql = 'UPDATE room_student 
-        SET is_next = 1, waiting = '.$waiting.' WHERE room_id = '.$room_id.' AND student_id = '.$id.';';
+        SET waiting = '.$waiting.', in_room = TRUE WHERE room_id = '.$room_id.' AND student_id = '.$id.';';
 
         $pdo->exec($sql);
     } else {
@@ -41,7 +47,7 @@ if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
             $team = 1;
         }
         
-        $sql = 'INSERT INTO room_student(room_id, student_id, team, is_next, waiting) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO room_student(room_id, student_id, team, in_room, waiting) VALUES (?, ?, ?, ?)';
         $stmt= $pdo->prepare($sql);
         $stmt->execute([$room_id, $id, $team, TRUE, $waiting]);
     }

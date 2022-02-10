@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2022 at 06:29 PM
+-- Generation Time: Feb 10, 2022 at 05:03 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -92,7 +92,6 @@ CREATE TABLE `room_student` (
   `waiting` tinyint(1) NOT NULL DEFAULT 1,
   `team` int(11) DEFAULT NULL,
   `in_room` tinyint(1) NOT NULL DEFAULT 0,
-  `is_temp` tinyint(1) NOT NULL DEFAULT 0,
   `is_next` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,29 +99,29 @@ CREATE TABLE `room_student` (
 -- Dumping data for table `room_student`
 --
 
-INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `in_room`, `is_temp`, `is_next`) VALUES
-(7, 6, NULL, 0, NULL, 0, 0, 0),
-(7, 7, NULL, 0, NULL, 0, 0, 0),
-(7, 8, NULL, 0, NULL, 0, 0, 0),
-(7, 9, NULL, 0, NULL, 0, 0, 0),
-(8, 6, NULL, 0, NULL, 0, 0, 0),
-(8, 7, NULL, 0, NULL, 0, 0, 0),
-(8, 8, NULL, 0, NULL, 0, 0, 0),
-(8, 9, NULL, 0, NULL, 0, 0, 0),
-(40, 6, '2022-01-28 12:45:00', 0, 1, 0, 0, 0),
-(40, 7, '2022-01-29 12:45:00', 0, 2, 1, 0, 0),
-(40, 8, '2022-01-30 12:45:00', 0, 3, 0, 0, 0),
-(40, 9, '2022-01-31 12:45:00', 0, 4, 0, 0, 1),
-(40, 10, '2022-02-01 12:45:00', 1, 5, 0, 0, 0),
-(40, 11, '2022-02-02 12:45:00', 1, 6, 0, 0, 0),
-(40, 12, '2022-02-03 12:45:00', 1, 7, 0, 0, 0),
-(40, 13, '2022-02-04 12:45:00', 1, 8, 0, 0, 0),
-(40, 14, '2022-02-05 12:45:00', 1, 9, 0, 0, 0),
-(40, 15, '2022-02-06 12:45:00', 0, 10, 0, 0, 0),
-(40, 16, '2022-02-07 12:45:00', 1, 11, 0, 0, 0),
-(40, 17, '2022-02-08 12:45:00', 1, 12, 0, 0, 0),
-(40, 18, '2022-02-09 12:45:00', 1, 13, 0, 0, 0),
-(40, 19, '2022-02-10 12:45:00', 1, 14, 0, 0, 0);
+INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `waiting`, `team`, `in_room`, `is_next`) VALUES
+(7, 6, NULL, 0, NULL, 0, 0),
+(7, 7, NULL, 0, NULL, 0, 0),
+(7, 8, NULL, 0, NULL, 0, 0),
+(7, 9, NULL, 0, NULL, 0, 0),
+(8, 6, NULL, 0, NULL, 0, 0),
+(8, 7, NULL, 0, NULL, 0, 0),
+(8, 8, NULL, 0, NULL, 0, 0),
+(8, 9, NULL, 0, NULL, 0, 0),
+(40, 6, '2022-01-28 12:45:00', 1, 1, 0, 0),
+(40, 7, '2022-01-29 12:45:00', 1, 2, 1, 0),
+(40, 8, '2022-01-30 12:45:00', 1, 3, 0, 0),
+(40, 9, '2022-01-31 12:45:00', 1, 4, 0, 0),
+(40, 10, '2022-02-01 12:45:00', 1, 5, 0, 0),
+(40, 11, '2022-02-02 12:45:00', 1, 6, 1, 0),
+(40, 12, '2022-02-03 12:45:00', 1, 7, 1, 0),
+(40, 13, '2022-02-04 12:45:00', 1, 8, 0, 0),
+(40, 14, '2022-02-05 12:45:00', 1, 9, 1, 0),
+(40, 15, '2022-02-06 12:45:00', 1, 10, 0, 0),
+(40, 16, '2022-02-07 12:45:00', 1, 11, 0, 0),
+(40, 17, '2022-02-08 12:45:00', 1, 12, 0, 1),
+(40, 18, '2022-02-09 12:45:00', 1, 13, 0, 0),
+(40, 19, '2022-02-10 12:45:00', 1, 14, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +152,7 @@ INSERT INTO `users` (`user_id`, `faculty_number`, `name`, `role`, `username`, `p
 (9, 81444, 'Студент 4', 1, 'student4', '$2y$10$G.hrMEkSs2X.rSesANPQoeJmuh7sHZVdIknMCWDgQVpmqCJ01p8nq'),
 (10, 81555, 'st 5', 1, 'student5', '$2y$10$Qi/BurBzNr60JvlxQxP.s.sCsNm.8ltLtcAXcEIZDn78Yuh88t2g6'),
 (11, 81666, 'st 6', 1, 'student6', '$2y$10$GQY4h5qz/.uEc4EuOdNfIez39TXQsz.hyyjZW5xVdzdm9zQAfIKym'),
-(12, 81777, 'st 7', 1, 'student7', '$2y$10$w0pc82Ie7nLaGcvicX7P.e3KZkCrudquu4I1hTHI.frrSJFWaaWz2'),
+(12, 81777, 'Милена Веселинова Христова', 1, 'student7', '$2y$10$w0pc82Ie7nLaGcvicX7P.e3KZkCrudquu4I1hTHI.frrSJFWaaWz2'),
 (13, 81888, 'st 8', 1, 'student8', '$2y$10$vNBDgV9xNQPJxMYtSok.xeca.yvKLxFfJQ/kREbX.cwOKXswApFYS'),
 (14, 81999, 'st 9', 1, 'student9', '$2y$10$gtTnj8/pcQVUi9UWY9l/Ouv7J3qim4NHwtsFHkYBk1xV2ibQZR8ie'),
 (15, 88111, 'st 10', 1, 'studen10', '$2y$10$Qtf1/6UkSqPbDiHjGHDoX.2/UN.Be9RD9sG.X2rWBwftDsXtonrZu'),
