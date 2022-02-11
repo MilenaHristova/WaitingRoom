@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2022 at 05:03 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.0
+-- Generation Time: Feb 11, 2022 at 01:13 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,11 +42,6 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`msg_id`, `room_id`, `text`, `author_id`, `author_name`, `send_to`, `time`) VALUES
-(26, 35, 'това се вижда само от преподаватели', 5, 'Милен Петров', 1, '2022-02-07 10:15:24'),
-(27, 35, 'това се вижда от всички', 5, 'Милен Петров', 0, '2022-02-07 10:15:37'),
-(28, 35, 'това се вижда само от преподаватели и Студент 1', 6, 'Студент Едно', 1, '2022-02-07 10:18:01'),
-(29, 35, 'това се вижда от всички', 6, 'Студент Едно', 0, '2022-02-07 10:18:27'),
-(30, 35, 'hey', 7, 'Студент Две', 0, '2022-02-07 10:19:33'),
 (0, 40, 'test', 6, 'Студент Едно', 0, '2022-02-09 03:59:25');
 
 -- --------------------------------------------------------
@@ -166,6 +161,14 @@ INSERT INTO `users` (`user_id`, `faculty_number`, `name`, `role`, `username`, `p
 --
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`msg_id`),
+  ADD KEY `room_id_foreign_key` (`room_id`),
+  ADD KEY `author_id_foreign_key` (`author_id`);
+
+--
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
@@ -206,6 +209,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `author_id_foreign_key` FOREIGN KEY (`author_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `room_id_foreign_key` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 
 --
 -- Constraints for table `rooms`
