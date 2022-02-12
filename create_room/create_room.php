@@ -148,7 +148,7 @@
                             $stmt->execute([$room_id, $id, $time, $team]);
                         }
                             
-                        $query = 'UPDATE room_student SET is_next = TRUE, waiting = FALSE WHERE team = 1';
+                        $query = 'UPDATE room_student SET is_next = TRUE WHERE team = 1';
                         $pdo->exec($query);
                     }  
                 }

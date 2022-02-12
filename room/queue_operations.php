@@ -49,17 +49,16 @@ function updateNext($room_id){
     if($result == FALSE){
         $curr = 0;
     } else {
-        $curr = $result["team"]; 
+        $curr = $result["team"];
+        $sql = 'UPDATE room_student SET is_next = FALSE, in_room = TRUE, waiting = FALSE WHERE room_id = ? AND team = ?;';
+        $stmt= $pdo->prepare($sql);
+        $stmt->execute([$room_id, $curr]);
     }
     
-	
-    $query = 'UPDATE room_student 
-    SET is_next = FALSE WHERE room_id = '.$room_id.';';
-    $pdo->exec($query);
-    
 	$date = date('Y-m-d H:i:s', time());
-	$sql = 'UPDATE room_student 
-    SET is_next = TRUE, in_room = TRUE, waiting = FALSE, in_time = ? 
+	
+    $sql = 'UPDATE room_student 
+    SET is_next = TRUE, in_time = ? 
 	WHERE room_id = ? AND team = ? AND waiting = TRUE';
 	$stmt= $pdo->prepare($sql);
 	$curr = $curr + 1; 
