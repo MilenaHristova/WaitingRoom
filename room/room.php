@@ -90,6 +90,8 @@
         include("queue.php");
     }
     
+    ?>
+    
         <div class="side-panel">
             <?php include_once("messages.php") ?>
         </div>
