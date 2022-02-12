@@ -52,13 +52,18 @@ function updateNext($room_id){
         $curr = $result["team"]; 
     }
     
+	
     $query = 'UPDATE room_student 
     SET is_next = FALSE WHERE room_id = '.$room_id.';';
-       $pdo->exec($query);
-    
-    $query = 'UPDATE room_student 
-    SET is_next = TRUE, in_room = TRUE, waiting = FALSE WHERE room_id = '.$room_id.' AND team = '.($curr + 1).' AND waiting = TRUE';
     $pdo->exec($query);
+    
+	$date = date('Y-m-d H:i:s', time());
+	$sql = 'UPDATE room_student 
+    SET is_next = TRUE, in_room = TRUE, waiting = FALSE, in_time = ? 
+	WHERE room_id = ? AND team = ? AND waiting = TRUE';
+	$stmt= $pdo->prepare($sql);
+	$curr = $curr + 1; 
+	$stmt->execute([$date, $room_id, $curr]);
     
     header("Location: room.php?room=".$room_id);
     exit();
@@ -80,6 +85,9 @@ function getNext($room_id){
     }
    
     if(empty($res)){
+		if(!getInRoom($room_id)){
+			updateAvgTimeOfType($room_id);
+		}
         return FALSE;
     }
     
@@ -148,6 +156,67 @@ function getBreak($room_id){
     $res = $st->fetch(PDO::FETCH_ASSOC);
     
     return $res == FALSE ? FALSE : $res['break_until'];
+}
+
+function getAvgTime($room_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+    $sql = 'SELECT avg_time FROM rooms WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+	
+	return $res == FALSE ? FALSE : $res['avg_time'];
+}
+
+function getEstimatedWaitingTime($room_id, $student_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$avg_time = getAvgTime($room_id);
+	
+	$sql = 'SELECT team FROM room_student WHERE room_id = '.$room_id.' AND student_id = '.$student_id; 
+	$st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+	$student_team = $res['team'];
+	
+	$sql='SELECT * FROM room_student WHERE room_id = '.$room_id.' AND waiting = TRUE AND team < '.$student_team.' GROUP BY team';
+	$st = $pdo->query($sql);
+    $before = $st->rowCount();
+	
+	return $before * $avg_time;
+}
+
+function checkIfInQueue($room_id, $student_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+    $sql = 'SELECT * FROM room_student WHERE room_id = '.$room_id.' AND student_id = '.$student_id;
+	$st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+	
+	return $res == FALSE ? FALSE : TRUE;
+}
+
+function updateAvgTimeOfType($room_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+	$sql = 'SELECT avg_time, type FROM rooms WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+	$new_avg = $res['avg_time'];
+	$type = $res['type'];
+	if($type != NULL){
+		$sql = 'SELECT avg_time FROM room_type WHERE type = ?';
+		$st= $pdo->prepare($sql); 
+		$st->execute([$type]);
+		$res = $st->fetch(PDO::FETCH_ASSOC);
+		$old_avg = $res['avg_time'] > 0 ? $res['avg_time'] : $new_avg;
+	
+		$sql = 'UPDATE room_type SET avg_time = ? WHERE type = ?';
+		$st= $pdo->prepare($sql); 
+		$st->execute([($old_avg + $new_avg) / 2, $type]);
+	}
 }
 
 if(isset($_POST["next"])){

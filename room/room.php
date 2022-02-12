@@ -47,16 +47,14 @@
     $break_until = getBreak($room_id);
     $text = '';
     
-    if($break_until == FALSE | strtotime($break_until) - time() <= 0){
-        $panel_visibility = 'collapse';
-    } else{
+    if(!($break_until == FALSE | strtotime($break_until) - time() <= 0))
+    {
         $panel_visibility = 'visible';
         $date = new DateTime($break_until);
         $break_until = $date->format("H:i");
         $text = 'Почивка до '.$break_until;
-    }
-    
-    if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
+    } 
+    else if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
         $panel_visibility = 'visible';
         $text = 'Твой ред е!';
         if($descr["url"] != null){
@@ -79,20 +77,18 @@
     </header>
     <!--style="visibility:<?php echo $panel_visibility ?>"-->
     
-    <div class="panel">
+    <div class="turn-or-break-message" style="visibility:<?php echo $panel_visibility ?>">
             <?php echo $text; ?>
-        </div>
-        
-        <?php 
-        if($user_role == 2){
-            include("admin.php");
-            include("queue_admin.php");
-            include("list.php");
-        } else {
-            include("queue.php");
-        }
-        
-        ?>
+    </div>
+    <?php 
+    
+    if($user_role == 2){
+        include("admin.php");
+        include("queue_admin.php");
+        include("list.php");
+    } else {
+        include("queue.php");
+    }
     
         <div class="side-panel">
             <?php include_once("messages.php") ?>

@@ -108,6 +108,19 @@ body{
     margin-left: 5px;
 }
 
+.turn-or-break-message{
+	margin: 10px;
+	padding: 5px;
+	
+	border-style:solid;
+	
+	font-size:30px;
+	text-align: center;
+	
+	border-color: #080F5B;
+	background-color: #15DB95;
+	color:#080F5B;
+}
 .field {
     margin-top:10px;
     margin-bottom: 2%;
