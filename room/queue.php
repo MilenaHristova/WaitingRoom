@@ -5,7 +5,12 @@
 	$student_in_queue = checkIfInQueue($room_id, $user_id);
 	if($student_in_queue){
 		$user_time = getStudentTime($user_id, $room_id);
-		$time = date("H:i", strtotime($user_time));
+		if($user_time == FALSE){
+			$time = FALSE;
+		}
+		else{
+			$time = date("H:i", strtotime($user_time));
+		}
 		$waiting_time = getEstimatedWaitingTime($room_id, $user_id);
 	}
 	
@@ -19,16 +24,37 @@
                 <p><?php echo $next_fn != FALSE ? $next_fn:'Край' ?></p>
             </div>
 			<?php if ($student_in_queue):?>
+			<?php if ($time != FALSE):?>
             <div class="time">
                 <p>Час по график:</p>
                 <p><?php echo $time.' ч'; ?></p>
             </div>
+			<?php endif; ?>
             <div class="time">
                 <p>Оценено време за чакане:</p>
                 <p><?php echo $waiting_time.' минути'; ?></p>
-            </div>
+			</div>
+			
+			<div class="remove_me">
+				<form action="queue_operations.php" method="post">
+                    <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+					<input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+                    <input type="submit" class="blue_button" name="remove_me" id="remove_me" value="Излез от опашката">
+                </form>
+			</div>
+		</div>	
+            <?php else: ?>
+		
+			<div class="add_me">
+				<form action="queue_operations.php" method="post">
+                    <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+					<input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+                    <input type="submit" class="blue_button" name="add_me" id="add_me" value="Нареди се">
+                </form>
+			</div>
+		</div>
 			<?php endif; ?>
-          </div>
+          
         
           <div class="queue">
              <ul class="list">
@@ -41,6 +67,7 @@
                 ?>
              </ul>
          </div>
+		 
     </div>
     
 </html>

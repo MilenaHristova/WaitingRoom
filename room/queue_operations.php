@@ -49,20 +49,22 @@ function updateNext($room_id){
     if($result == FALSE){
         $curr = 0;
     } else {
+		$date = date('Y-m-d H:i:s', time());
         $curr = $result["team"];
-        $sql = 'UPDATE room_student SET is_next = FALSE, in_room = TRUE, waiting = FALSE WHERE room_id = ? AND team = ?;';
+        $sql = 'UPDATE room_student SET is_next = FALSE, in_room = TRUE, waiting = FALSE, in_time = ? 
+		WHERE room_id = ? AND team = ?;';
         $stmt= $pdo->prepare($sql);
-        $stmt->execute([$room_id, $curr]);
+        $stmt->execute([$date, $room_id, $curr]);
     }
     
-	$date = date('Y-m-d H:i:s', time());
+	
 	
     $sql = 'UPDATE room_student 
-    SET is_next = TRUE, in_time = ? 
+    SET is_next = TRUE 
 	WHERE room_id = ? AND team = ? AND waiting = TRUE';
 	$stmt= $pdo->prepare($sql);
 	$curr = $curr + 1; 
-	$stmt->execute([$date, $room_id, $curr]);
+	$stmt->execute([$room_id, $curr]);
     
     header("Location: room.php?room=".$room_id);
     exit();
@@ -196,6 +198,28 @@ function checkIfInQueue($room_id, $student_id){
 	return $res == FALSE ? FALSE : TRUE;
 }
 
+function addInQueue($room_id, $student_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'SELECT MAX(team) as maxTeam FROM room_student WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+    $res = $st->fetch(PDO::FETCH_ASSOC);
+	
+	$sql = 'INSERT INTO room_student (room_id, student_id, team, waiting) VALUES (?,?,?,?)';
+	$st= $pdo->prepare($sql); 
+	$st->execute([$room_id, $student_id, $res['maxTeam'] + 1, TRUE]);
+	
+}
+
+function removeFromQueue($room_id, $student_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'DELETE FROM room_student WHERE room_id = '.$room_id.' AND student_id = '.$student_id;
+	$st = $pdo->query($sql);
+}
+
 function updateAvgTimeOfType($room_id){
 	$db = Database::getInstance();
     $pdo = $db->getConnection();
@@ -220,6 +244,20 @@ function updateAvgTimeOfType($room_id){
 
 if(isset($_POST["next"])){
     updateNext($_POST["room_id"]);
+} elseif(isset($_POST['remove_me'])){
+	
+	$room_id = $_POST["room_id"];
+	$student_id = $_POST['user_id'];
+	removeFromQueue($room_id, $student_id);
+	header("Location: ../room/room.php?room=".$room_id);
+	
+} elseif(isset($_POST['add_me'])){
+	
+	$room_id = $_POST["room_id"];
+	$student_id = $_POST['user_id'];
+	addInQueue($room_id, $student_id);
+	header("Location: ../room/room.php?room=".$room_id);
+	
 } elseif(isset($_POST["break"])){
     $room_id = $_POST["room_id"];
     if(!isset($_POST["mins"])){
