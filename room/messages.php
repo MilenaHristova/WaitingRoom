@@ -25,7 +25,7 @@
 				            echo "
 				            <div class=$msg_class>
 				            <span class=\"msg_text\">{$msg['text']}</span>
-                            <div class=\"msg\"><span class=\"author\">{$msg['author_name']}</span>
+                            <div class=\"msg_div\"><span class=\"author\">{$msg['author_name']}</span>
 				            <span class=\"msg_time\">{$time}</span></div>
 				            </div>
 				            ";

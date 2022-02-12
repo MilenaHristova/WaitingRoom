@@ -77,24 +77,26 @@
         <p><?php echo $descr["name"] ?></p>
         <p class="descr">(<?php echo $descr["description"] ?>)</p>   
     </header>
+    <!--style="visibility:<?php echo $panel_visibility ?>"-->
     
-    <!--<div class="panel" style="visibility:<?php echo $panel_visibility ?>">
+    <div class="panel">
             <?php echo $text; ?>
-    </div>-->
-    <?php 
+        </div>
+        
+        <?php 
+        if($user_role == 2){
+            include("admin.php");
+            include("queue_admin.php");
+            include("list.php");
+        } else {
+            include("queue.php");
+        }
+        
+        ?>
     
-    if($user_role == 2){
-        include("admin.php");
-        include("queue_admin.php");
-        include("list.php");
-    } else {
-        include("queue.php");
-    }
-    
-    ?>
+        <div class="side-panel">
+            <?php include_once("messages.php") ?>
+        </div>
 
-    <div class="side-panel">
-        <?php include_once("messages.php") ?>
-    </div>
 </body>
 </html>
