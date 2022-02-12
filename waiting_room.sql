@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2022 at 01:00 AM
+-- Generation Time: Feb 12, 2022 at 09:59 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -37,13 +37,6 @@ CREATE TABLE `messages` (
   `time` datetime NOT NULL DEFAULT '1970-01-01 00:00:01' ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`msg_id`, `room_id`, `text`, `author_id`, `author_name`, `send_to`, `time`) VALUES
-(0, 40, 'test', 6, 'Студент Едно', 0, '2022-02-09 03:59:25');
-
 -- --------------------------------------------------------
 
 --
@@ -56,7 +49,7 @@ CREATE TABLE `rooms` (
   `moderator_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(400) NOT NULL,
-  `type` varchar(64) DEFAULT NULL,
+  `type_id` int(11) DEFAULT NULL,
   `url` varchar(400) DEFAULT NULL,
   `meeting_password` varchar(100) DEFAULT NULL,
   `break_until` datetime DEFAULT NULL,
@@ -68,13 +61,13 @@ CREATE TABLE `rooms` (
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `type`, `url`, `meeting_password`, `break_until`, `avg_time`, `passed_people`) VALUES
+INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `type_id`, `url`, `meeting_password`, `break_until`, `avg_time`, `passed_people`) VALUES
 (1, 1, 1, 'Защита на проекти 1-ва група', 'ееееееееее\r\nееееееееее\r\nееееееееее', NULL, '', '', NULL, NULL, 0),
 (2, 1, 1, 'Устен изпит Кн2', 'е', NULL, '', '', NULL, NULL, 0),
 (3, 1, 1, 'Писмен изпит ИС', '', NULL, '', '', NULL, NULL, 0),
 (7, 5, 5, 'Стая 1', 'Описание', NULL, 'link', 'password', NULL, NULL, 0),
 (8, 5, 5, 'Test staq', 'op', NULL, 'link', 'passw', NULL, NULL, 0),
-(40, 5, 5, 'Стая', 'Стая', 'project_defense', '', '', NULL, NULL, 0);
+(40, 5, 5, 'Стая', 'Стая', NULL, '', '', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -83,6 +76,7 @@ INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `descripti
 --
 
 CREATE TABLE `room_student` (
+  `id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `time` datetime DEFAULT NULL,
@@ -98,29 +92,22 @@ CREATE TABLE `room_student` (
 -- Dumping data for table `room_student`
 --
 
-INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `in_time`, `out_time`, `waiting`, `team`, `in_room`, `is_next`) VALUES
-(7, 6, NULL, NULL, NULL, 0, NULL, 0, 0),
-(7, 7, NULL, NULL, NULL, 0, NULL, 0, 0),
-(7, 8, NULL, NULL, NULL, 0, NULL, 0, 0),
-(7, 9, NULL, NULL, NULL, 0, NULL, 0, 0),
-(8, 6, NULL, NULL, NULL, 0, NULL, 0, 0),
-(8, 7, NULL, NULL, NULL, 0, NULL, 0, 0),
-(8, 8, NULL, NULL, NULL, 0, NULL, 0, 0),
-(8, 9, NULL, NULL, NULL, 0, NULL, 0, 0),
-(40, 6, '2022-01-28 12:45:00', '2022-02-11 20:54:38', NULL, 0, 1, 0, 1),
-(40, 7, '2022-02-11 03:13:08', '2022-02-11 03:13:10', NULL, 0, 2, 1, 0),
-(40, 8, '2022-02-11 03:13:10', '2022-02-11 15:13:57', NULL, 0, 3, 1, 0),
-(40, 9, '2022-02-11 03:13:57', '2022-02-11 15:14:11', NULL, 0, 4, 1, 0),
-(40, 10, '2022-02-11 03:14:11', '2022-02-11 15:14:14', NULL, 0, 5, 1, 0),
-(40, 11, '2022-02-11 03:14:14', '2022-02-11 15:14:14', NULL, 0, 6, 1, 1),
-(40, 12, '2022-02-03 12:45:00', NULL, NULL, 1, 7, 1, 0),
-(40, 13, '2022-02-04 12:45:00', NULL, NULL, 1, 8, 0, 0),
-(40, 14, '2022-02-05 12:45:00', NULL, NULL, 1, 9, 1, 0),
-(40, 15, '2022-02-06 12:45:00', NULL, NULL, 1, 10, 0, 0),
-(40, 16, '2022-02-07 12:45:00', NULL, NULL, 1, 11, 0, 0),
-(40, 17, '2022-02-08 12:45:00', '2022-02-11 03:13:08', NULL, 1, 12, 0, 0),
-(40, 18, '2022-02-09 12:45:00', NULL, NULL, 1, 13, 0, 0),
-(40, 19, '2022-02-10 12:45:00', NULL, NULL, 1, 14, 0, 0);
+INSERT INTO `room_student` (`id`, `room_id`, `student_id`, `time`, `in_time`, `out_time`, `waiting`, `team`, `in_room`, `is_next`) VALUES
+(9, 40, 6, '2022-01-28 12:45:00', '2022-02-11 20:54:38', NULL, 0, 1, 0, 1),
+(10, 40, 7, '2022-02-11 03:13:08', '2022-02-11 03:13:10', NULL, 0, 2, 1, 0),
+(11, 40, 8, '2022-02-11 03:13:10', '2022-02-11 15:13:57', NULL, 0, 3, 1, 0),
+(12, 40, 9, '2022-02-11 03:13:57', '2022-02-11 15:14:11', NULL, 0, 4, 1, 0),
+(13, 40, 10, '2022-02-11 03:14:11', '2022-02-11 15:14:14', NULL, 0, 5, 1, 0),
+(14, 40, 11, '2022-02-11 03:14:14', '2022-02-11 15:14:14', NULL, 0, 6, 1, 1),
+(15, 40, 12, '2022-02-03 12:45:00', NULL, NULL, 1, 7, 1, 0),
+(16, 40, 13, '2022-02-04 12:45:00', NULL, NULL, 1, 8, 0, 0),
+(17, 40, 14, '2022-02-05 12:45:00', NULL, NULL, 1, 9, 1, 0),
+(18, 40, 15, '2022-02-06 12:45:00', NULL, NULL, 1, 10, 0, 0),
+(19, 40, 16, '2022-02-07 12:45:00', NULL, NULL, 1, 11, 0, 0),
+(20, 40, 17, '2022-02-08 12:45:00', '2022-02-11 03:13:08', NULL, 1, 12, 0, 0),
+(21, 40, 18, '2022-02-09 12:45:00', NULL, NULL, 1, 13, 0, 0),
+(22, 40, 19, '2022-02-10 12:45:00', NULL, NULL, 1, 14, 0, 0),
+(23, 2, 7, NULL, NULL, NULL, 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -129,19 +116,20 @@ INSERT INTO `room_student` (`room_id`, `student_id`, `time`, `in_time`, `out_tim
 --
 
 CREATE TABLE `room_type` (
-  `type` varchar(64) NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `avg_time` int(11) NOT NULL
+  `avg_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `room_type`
 --
 
-INSERT INTO `room_type` (`type`, `name`, `avg_time`) VALUES
-('mark', 'Нанасяне на оценка', 5),
-('project_defense', 'Защита на проект', 15),
-('referat', 'Представяне на реферат', 8);
+INSERT INTO `room_type` (`id`, `name`, `avg_time`) VALUES
+(1, 'Защита на проект', 15),
+(5, 'Представяне на реферат', 8),
+(6, 'Нанасяне на оценка', 5),
+(7, 'test', 5);
 
 -- --------------------------------------------------------
 
@@ -200,12 +188,13 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`room_id`),
   ADD KEY `creator_id` (`creator_id`),
   ADD KEY `moderator_id` (`moderator_id`),
-  ADD KEY `rooms_ibfk_3` (`type`);
+  ADD KEY `rooms_ibfk_3` (`type_id`);
 
 --
 -- Indexes for table `room_student`
 --
 ALTER TABLE `room_student`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `room_id` (`room_id`),
   ADD KEY `student_id` (`student_id`);
 
@@ -213,7 +202,7 @@ ALTER TABLE `room_student`
 -- Indexes for table `room_type`
 --
 ALTER TABLE `room_type`
-  ADD PRIMARY KEY (`type`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -227,10 +216,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
+--
+-- AUTO_INCREMENT for table `room_student`
+--
+ALTER TABLE `room_student`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `room_type`
+--
+ALTER TABLE `room_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -255,7 +262,7 @@ ALTER TABLE `messages`
 ALTER TABLE `rooms`
   ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`moderator_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `rooms_ibfk_3` FOREIGN KEY (`type`) REFERENCES `room_type` (`type`);
+  ADD CONSTRAINT `rooms_ibfk_3` FOREIGN KEY (`type_id`) REFERENCES `room_type` (`id`);
 
 --
 -- Constraints for table `room_student`

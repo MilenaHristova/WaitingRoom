@@ -43,15 +43,25 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
 						$query = 'SELECT * FROM room_type';
 						$st = $pdo->query($query);
 						while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
+							if ($row['avg_time'] != NULL){
+								$time_text = "(~ {$row['avg_time']} минути)"; 
+							}
+							else{
+								$time_text = '';
+							}
 							echo "<div class=\"row\">
-							<input type=\"radio\" name=\"type\" id={$row['type']} value={$row['type']}>
-							<label for={$row['type']}>{$row['name']} (~ {$row['avg_time']} минути)</label>
+							<input type=\"radio\" name=\"type\" id={$row['id']} value={$row['id']}>
+							<label for={$row['id']}>{$row['name']} $time_text</label>
 							</div>";
 						}
 						
 					?>
 					
                 </div>
+				<div class="row">
+					<a href="create_room_type_form.php">Създай нова стая</a>
+				</div>
+				
                 <div>
                     <input type="text" name="url" id="url" class="field" placeholder="Линк към срещата (за онлайн стаи)">
                 </div>
