@@ -34,16 +34,23 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
                 <div>
                     <input type="text" name="descr" id="descr" class="field" placeholder="Описание">
                 </div>
-                <div>
-                    <div class="row">
-                        <input type="radio" name="type" id="project_defense" value="project_defense">
-                        <label for="project_defense">Защита на проект</label>
-                        <input type="radio" name="type" id="referat" value="referat">
-                        <label for="referat">Представяне на реферат</label>
-                        <input type="radio" name="type" id="mark" value="mark">
-                        <label for="mark">Нанасяне на оценка</label>
-                    </div>
+                <div class="room_types">
                     
+					<?php
+						require '../connect_db.php';
+						$db = Database::getInstance();
+						$pdo = $db->getConnection();
+						$query = 'SELECT * FROM room_type';
+						$st = $pdo->query($query);
+						while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
+							echo "<div class=\"row\">
+							<input type=\"radio\" name=\"type\" id={$row['type']} value={$row['type']}>
+							<label for={$row['type']}>{$row['name']} (~ {$row['avg_time']} минути)</label>
+							</div>";
+						}
+						
+					?>
+					
                 </div>
                 <div>
                     <input type="text" name="url" id="url" class="field" placeholder="Линк към срещата (за онлайн стаи)">

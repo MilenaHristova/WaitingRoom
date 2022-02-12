@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<meta http-equiv="refresh" content="10;URL='room.php?room=<?php echo $_REQUEST['room']?>'">
+<!--<meta http-equiv="refresh" content="10;URL='room.php?room=<?php echo $_REQUEST['room']?>'">-->
 <title> Чакалня </title>
     <link rel="stylesheet" href="room.css">
 	<link rel="stylesheet" href="../common.css">	

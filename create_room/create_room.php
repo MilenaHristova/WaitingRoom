@@ -58,11 +58,17 @@
                 $type = $_POST["type"];
                 $userid = $_SESSION["user_id"];
                 
+				$sql = 'SELECT avg_time FROM room_type WHERE type = ?';
+				$st= $pdo->prepare($sql); 
+				$st->execute([$type]);
+				$res = $st->fetch(PDO::FETCH_ASSOC);
+				$avg_time = $res['avg_time'] > 0 ? $res['avg_time'] : NULL;
+				
                 $query = 'INSERT INTO rooms(creator_id, moderator_id, name, description,
-                type, meeting_password, url) values(?, ?, ?, ?, ?, ?, ?)';
+                type, meeting_password, url, avg_time) values(?, ?, ?, ?, ?, ?, ?, ?)';
                 
                 $stmt= $pdo->prepare($query);
-                $stmt->execute([$userid, $userid, $title, $descr, $type, $passwd, $url]);
+                $stmt->execute([$userid, $userid, $title, $descr, $type, $passwd, $url, $avg_time]);
             }
             
             
