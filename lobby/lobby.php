@@ -3,6 +3,9 @@
    {
            session_start();
    }
+  
+   
+ include_once 'lobby_operations.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,25 +29,38 @@
         $temp_role = $_SESSION['user_role'];
         echo "<p>Добре дошли, {$_SESSION["name"]}</p>";
      ?>
-     <form method="get" action="exit_lobby.php">
-                 <button  type="submit" class="header_button">Излез</button>
+     <form method="post" action="lobby_operations.php">
+                 <input  type="submit" class="header_button" name="exit" value="Излез">
      </form>
+	 <div class="create_room">
+		<?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 2) : ?>
+			<button class="header_button" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
+		<?php endif; ?>
+	 </div>
+	 <form method = "post" action="lobby_operations.php">
+				<input type="text" class="search_field" name="key_word" placeholder="Търсене на стая">
+				<input type="hidden" class="header_button" name="search_rooms" value="Търси">
+	 </form>
     <?php endif; ?>
-	<div class="create_room">
-	<?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 2) : ?>
-        <button class="header_button" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
-	<?php endif; ?>
-	</div>
+	
 </header>
 
 <div class="rooms_list">
 <?php
-require_once '../connect_db.php';
+/*require_once '../connect_db.php';
 $db = Database::getInstance();
 $pdo = $db->getConnection();
 $query = 'SELECT name, description, room_id FROM rooms';
 $statements = $pdo->query($query);
-$rows = $statements->fetchAll(PDO::FETCH_ASSOC);
+$rows = $statements->fetchAll(PDO::FETCH_ASSOC);*/
+if(isset($_SESSION['rooms'])){
+	$rows = $_SESSION['rooms'];
+	unset($_SESSION['rooms']);
+}
+else{
+	$rows = getAllRooms();
+}
+
 
 if($rows){
     foreach($rows as $row){
