@@ -177,6 +177,18 @@ body{
     font-size: 15px;
 }
 
+#add_me, #remove_me{
+	padding: 5px;
+	font-size:15px;
+	box-shadow: 3px 3px 5px black;
+	margin-left:20%;
+	margin-top:5%;
+}
+
+#remove_me{
+	margin-right:5%;
+}
+
 .next-btn-div{
     width: 30%;
     float: left;
@@ -198,6 +210,8 @@ body{
     height: 30px;
     border-radius: 15px;
 }
+
+
 
 .queue{
     margin-top: 10px;
