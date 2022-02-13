@@ -244,6 +244,24 @@ function updateAvgTimeOfType($room_id){
 	}
 }
 
+function checkIfCreator($room_id, $user_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'SELECT creator_id FROM rooms WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+	$res = $st->fetch(PDO::FETCH_ASSOC);
+	return $res['creator_id'] == $user_id;
+}
+
+function deleteRoom($room_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'DELETE FROM rooms WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+}
+
 if(isset($_POST["next"])){
     updateNext($_POST["room_id"]);
 } elseif(isset($_POST['remove_me'])){
@@ -260,6 +278,11 @@ if(isset($_POST["next"])){
 	addInQueue($room_id, $student_id);
 	header("Location: ../room/room.php?room=".$room_id);
 	
+} elseif(isset($_POST["delete_room"])){
+	$room_id = $_POST["room_id"];
+	deleteRoom($room_id);
+	header("Location: ../lobby/lobby.php");
+    exit(); 
 } elseif(isset($_POST["break"])){
     $room_id = $_POST["room_id"];
     if(!isset($_POST["mins"])){

@@ -82,6 +82,12 @@
         <form method="get" action="../lobby/lobby.php">
             <button  type="submit" class="header_button">Назад</button>
         </form>
+		<?php if(checkIfCreator($room_id, $user_id)):?>
+			<form method="post" action="queue_operations.php">
+				<input type="hidden" name="room_id" value=<?php echo $room_id;?>>
+				<input type="submit" class="header_button" name="delete_room" value="Изтриий стаята">
+			</form>
+		<?php endif;?>
         <p><?php echo $descr["name"] ?></p>
         <p class="descr">(<?php echo $descr["description"] ?>)</p>   
     </header>
