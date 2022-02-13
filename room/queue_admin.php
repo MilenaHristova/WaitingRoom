@@ -7,17 +7,15 @@ $students_in_room = getInRoom($room_id);
     <div class="left-panel-admin">
         <h2>Опашка чакащи</h2>
         <div class="header">
-            <div class="next">
+            <div class="next next_admin">
                 <p>Следващият номер:</p>
                 <p><?php echo $next_fn != FALSE ? $next_fn:'Край' ?></p>
             </div>
             
-            <div class="next-btn-div">
-                <form action="queue_operations.php" method="post">
-                    <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
-                    <input type="submit" name="next" id="next" value="Следващ">
-                </form>
-            </div>
+            <form action="queue_operations.php" method="post">
+                <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+                <input type="submit" name="next" class="btn_next" value="Следващ">
+            </form>
         </div>
         
             
@@ -32,5 +30,6 @@ $students_in_room = getInRoom($room_id);
             ?>
             </ul>
         </div>
+       
     </div>
 </html>

@@ -30,7 +30,6 @@
 
         </div>
       </div>
-        
         <div class="break-div">
             <form action="queue_operations.php" method="post">
                 Почивка: 
@@ -40,4 +39,15 @@
             </form>
         </div>
 </div> 
+<div class="invite-div">
+    
+    <form action="invite.php" method="post">
+        Покани всички:
+        <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+        <input type="submit" name="invite_all" value="Постоянно" class="blue_button">
+        <input type="submit" name="invite_all_temp" value="Временно" class="blue_button">
+    </form>
+</div>
+    
+
 </html>

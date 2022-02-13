@@ -43,6 +43,14 @@
     
     $next_team = getNext($room_id);
     $next_fn = $next_team == FALSE ? FALSE : implode(', ', $next_team);
+    
+    $in_room = getInRoom($room_id);
+    $is_next = FALSE;
+    foreach($in_room as $s){
+        if($s["id"] == $user_id){
+            $is_next = TRUE;
+        }
+    }
       
     $break_until = getBreak($room_id);
     $text = '';
@@ -53,8 +61,7 @@
         $date = new DateTime($break_until);
         $break_until = $date->format("H:i");
         $text = 'Почивка до '.$break_until;
-    } 
-    else if($user_role == 1 && $next_team != FALSE && in_array($_SESSION["fn"], $next_team)){
+    } elseif($user_role == 1 && $is_next == TRUE){
         $panel_visibility = 'visible';
         $text = 'Твой ред е!';
         if($descr["url"] != null){
@@ -92,9 +99,9 @@
     
     ?>
     
-        <div class="side-panel">
-            <?php include_once("messages.php") ?>
-        </div>
-
+    <div class="side-panel">
+        <?php include_once("messages.php") ?>
+    </div>
+    
 </body>
 </html>

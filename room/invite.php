@@ -54,6 +54,30 @@ if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
     
     header("Location: ../room/room.php?room=".$room_id);
     exit();
+} elseif(isset($_POST["invite_all"]) | isset($_POST["invite_all_temp"])) {
+    if(!isset($_SESSION['user_role']) | $_SESSION['user_role'] == 1){
+        header("Location: ../lobby/lobby.php");
+        exit();
+    } 
+    
+    $room_id = $_POST["room_id"];
+    
+    $db = Database::getInstance();
+    $pdo = $db->getConnection();
+    
+    if(isset($_POST["invite_all_temp"])){
+        $waiting = 1;
+    } else {
+        $waiting = 0;
+    }
+    
+    $sql = 'UPDATE room_student 
+        SET waiting = '.$waiting.', in_room = TRUE WHERE room_id = '.$room_id.' AND waiting = TRUE AND in_room = FALSE;';
+
+    $pdo->exec($sql);
+    
+    header("Location: ../room/room.php?room=".$room_id);
+    exit();
 }
 
 
