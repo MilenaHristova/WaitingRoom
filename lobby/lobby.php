@@ -37,11 +37,12 @@
 			<button class="header_button" type="button"><a href="../create_room/create_room_form.php">Създай стая</a></button>
 		<?php endif; ?>
 	 </div>
-	 <form method = "post" action="lobby_operations.php">
+
+    <?php endif; ?>
+		 <form method = "post" action="lobby_operations.php">
 				<input type="text" class="search_field" name="key_word" placeholder="Търсене на стая">
 				<input type="hidden" class="header_button" name="search_rooms" value="Търси">
 	 </form>
-    <?php endif; ?>
 	
 </header>
 
