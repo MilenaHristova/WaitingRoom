@@ -56,7 +56,6 @@ body{
     float: left;
     padding-left: 20px;
     text-align: center;
-    overflow: auto;
 }
 
 .side-panel{
@@ -359,6 +358,11 @@ body{
 
 .descr{
     margin-left: 10px;
+}
+
+.in-room{
+    height: 80%;
+    overflow: auto;
 }
 
 table{

@@ -46,11 +46,14 @@
     
     $in_room = getInRoom($room_id);
     $is_next = FALSE;
-    foreach($in_room as $s){
-        if($s["id"] == $user_id){
-            $is_next = TRUE;
+    if($in_room){
+        foreach($in_room as $s){
+            if($s["id"] == $user_id){
+                $is_next = TRUE;
+            }
         }
     }
+    
       
     $break_until = getBreak($room_id);
     $text = '';
