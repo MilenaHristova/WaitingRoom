@@ -2,8 +2,8 @@
 <head>
 <meta charset="UTF-8"/>
 <title> Чакалня </title>
-    <link rel="stylesheet" href="create.css">
-    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="styles/create.css">
+    <link rel="stylesheet" href="styles/common.css">
 </head>
 
 <body>
@@ -14,20 +14,20 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['user_role'] != 2){
-    header("Location: ../lobby/lobby.php");
+    header("Location: lobby.php");
     exit();
 }
 
 ?> 
     <header>
-        <form method="get" action="create_room_form.php">
+        <form method="get" action="create_room.php">
             <button  type="submit" class="header_button">Назад</button>
         </form>
     </header>
     <div class="container">
         <div class="create-form">
             <h1 class="title">Създаване на тип стая</h1>
-            <form action="create_room_type.php" method="post" enctype="multipart/form-data">
+            <form action="../controllers/create_room_type_controller.php" method="post" enctype="multipart/form-data">
                 <div>
                     <input type="text" name="name" id="name" class="field" placeholder="Име">
                 </div>

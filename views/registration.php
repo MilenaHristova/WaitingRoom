@@ -8,7 +8,7 @@ session_start();
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="styles/registration.css">
     <title>Регистрация</title>
 </head>
 <body>
@@ -21,10 +21,10 @@ session_start();
     <?php
     if(isset($_REQUEST['room_id'])){
     //$room_id = $_REQUEST['room_id'];
-    echo "<form method=\"post\" action=\"registration_validation.php?room_id={$_REQUEST['room_id']}\">";
+    echo "<form method=\"post\" action=\"../controllers/registration_controller.php?room_id={$_REQUEST['room_id']}\">";
     }
     else{
-    echo "<form id=\"form\" action=\"registration_validation.php\" method=\"post\" >";
+    echo "<form id=\"form\" action=\"../controllers/registration_controller.php\" method=\"post\" >";
     }
     ?>
             <input class="field" type="text" name="username" placeholder="Потребителско име">
@@ -48,10 +48,10 @@ session_start();
 	
 	<?php
 if(isset($_REQUEST['room_id'])){
-echo "<div class=\"login_link\"><a href=\"../login/login.php?room_id={$_REQUEST['room_id']}\"> Вече имате акаунт? Влезте в акаунта си </a> <i class=\"arrow\"></i></div>";
+echo "<div class=\"login_link\"><a href=\"login.php?room_id={$_REQUEST['room_id']}\"> Вече имате акаунт? Влезте в акаунта си </a> <i class=\"arrow\"></i></div>";
 }
 else{
-echo "<div class=\"login_link\"><a href=\"../login/login.php\">Вече имате акаунт? Влезте в акаунта си </a><i class=\"arrow\"></i></div>";
+echo "<div class=\"login_link\"><a href=\"login.php\">Вече имате акаунт? Влезте в акаунта си </a><i class=\"arrow\"></i></div>";
 }
 ?>
 </div>

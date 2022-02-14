@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Влизане</title>
 </head>
 <body>
@@ -28,10 +28,10 @@
 
 <?php
 if(isset($_REQUEST['room_id'])){
-echo "<form method=\"post\" action=\"login_validation.php?room_id={$_REQUEST['room_id']}\">";
+echo "<form method=\"post\" action=\"../controllers/login_controller.php?room_id={$_REQUEST['room_id']}\">";
 }
 else{
-echo "<form method=\"post\" action=\"login_validation.php\">";
+echo "<form method=\"post\" action=\"../controllers/login_controller.php\">";
 }
 ?>
 
@@ -56,10 +56,10 @@ echo "<form method=\"post\" action=\"login_validation.php\">";
 
 <?php
 if(isset($_REQUEST['room_id'])){
-echo "<div class=\"registration_link\"><a href=\"../registration/registration.php?room_id={$_REQUEST['room_id']}\"> Регистрирай се </a> <i class=\"arrow\"></i></div>";
+echo "<div class=\"registration_link\"><a href=\"registration.php?room_id={$_REQUEST['room_id']}\"> Регистрирай се </a> <i class=\"arrow\"></i></div>";
 }
 else{
-echo "<div class=\"registration_link\"><a href=\"../registration/registration.php\">Регистрирай се </a><i class=\"arrow\"></i></div>";
+echo "<div class=\"registration_link\"><a href=\"registration.php\">Регистрирай се </a><i class=\"arrow\"></i></div>";
 }
 ?>
 </div>

@@ -5,11 +5,10 @@
         <div class="messages" id="messages">
             <div>
                 <?php
-                $db = Database::getInstance();
-                $pdo = $db->getConnection();
-                $query = 'SELECT * FROM messages WHERE room_id = '.$room_id. ' ORDER BY time';
-                $statements = $pdo->query($query);
-                $messages = $statements->fetchAll(PDO::FETCH_ASSOC);
+                
+                $msgModel = new MessagesModel();
+                $messages = $msgModel->getMessages($room_id);
+                
                 if($messages){
                     foreach($messages as $msg){
                         
@@ -39,7 +38,7 @@
         </div>
     </div>
     <div class="add-msg">
-        <form action="send_msg.php" method="post">
+        <form action="../../controllers/room/send_msg_controller.php" method="post">
              <input type="hidden" name="room_id" value="<?php echo $room_id?>">
             <textarea name="msg"></textarea>
             <input type="radio" checked="checked" name="send_to" id="all" value="0">

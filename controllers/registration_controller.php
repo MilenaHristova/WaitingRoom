@@ -5,7 +5,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                session_start();
        }
 
-    require_once '../connect_db.php';
+    $config = require_once $_SERVER['DOCUMENT_ROOT'].'/WaitingRoom/config.php';
+    $base_dir = $config['BASE_FOLDER'];
+    $base_url = $config['BASE_URL'];
+    
+    require_once "$base_dir/db/users.php";
 
 
     function test_username($username){
@@ -110,15 +114,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["user_role"] = $rows[0]["role"];
 
         if(isset($_REQUEST['room_id'])){
-              header("Location: ../room/room.php?room={$_REQUEST['room_id']}");
+              header("Location: $base_url/views/room/room.php?room={$_REQUEST['room_id']}");
         }
         else{
-             header("Location: ../lobby/lobby.php");
+             header("Location: $base_url/views/lobby.php");
         }
    		exit();
    }
    else{
-   		header("Location: registration.php?registration_errors=".urlencode(serialize($errors) . "&room_id=" . $_REQUEST['room_id']));
+   		header("Location: $base_url/views/registration.php?registration_errors=".urlencode(serialize($errors) . "&room_id=" . $_REQUEST['room_id']));
    }
 
 }

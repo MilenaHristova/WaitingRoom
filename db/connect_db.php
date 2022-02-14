@@ -4,7 +4,8 @@ class Database {
     private static $instance = null;
     
     private function __construct(){
-        $config = include('config.php');
+        $config = include($_SERVER['DOCUMENT_ROOT'].'\WaitingRoom\config.php');
+        
         $host = $config['DB_SERVERNAME'];
         $db = $config['DB_NAME'];
         $user = $config['DB_USERNAME'];

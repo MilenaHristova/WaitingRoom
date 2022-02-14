@@ -1,6 +1,6 @@
 <! DOCTYPE html>
 <?php
-$students_in_room = getInRoom($room_id);
+$students_in_room = $queueModel->getInRoom($room_id);
 ?>
 
 <html>
@@ -12,7 +12,7 @@ $students_in_room = getInRoom($room_id);
                 <p><?php echo $next_fn != FALSE ? $next_fn:'Край' ?></p>
             </div>
             
-            <form action="queue_operations.php" method="post">
+            <form action="../../controllers/room/queue_controller.php" method="post">
                 <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
                 <input type="submit" name="next" class="btn_next" value="Следващ">
             </form>

@@ -1,17 +1,17 @@
 <! DOCTYPE html>
 <html>
     <?php
-    
-	$student_in_queue = checkIfInQueue($room_id, $user_id);
+
+	$student_in_queue = $queueModel->checkIfInQueue($room_id, $user_id);
 	if($student_in_queue){
-		$user_time = getStudentTime($user_id, $room_id);
+		$user_time = $queueModel->getStudentTime($user_id, $room_id);
 		if($user_time == FALSE){
 			$time = FALSE;
 		}
 		else{
 			$time = date("H:i", strtotime($user_time));
 		}
-		$waiting_time = getEstimatedWaitingTime($room_id, $user_id);
+		$waiting_time = $queueModel->getEstimatedWaitingTime($room_id, $user_id);
 	}
 	
     
@@ -36,7 +36,7 @@
 			</div>
 			
 			<div class="remove_me">
-				<form action="queue_operations.php" method="post">
+				<form action="../../controllers/room/queue_controller.php" method="post">
                     <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
 					<input type="hidden" name="user_id" value="<?php echo $user_id ?>">
                     <input type="submit" class="blue_button" name="remove_me" id="remove_me" value="Излез от опашката">
@@ -46,7 +46,7 @@
             <?php else: ?>
 		
 			<div class="add_me">
-				<form action="queue_operations.php" method="post">
+				<form action="../../controllers/room/queue_controller.php" method="post">
                     <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
 					<input type="hidden" name="user_id" value="<?php echo $user_id ?>">
                     <input type="submit" class="blue_button" name="add_me" id="add_me" value="Нареди се">

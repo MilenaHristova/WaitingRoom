@@ -2,8 +2,8 @@
 <head>
 <meta charset="UTF-8"/>
 <title> Чакалня </title>
-    <link rel="stylesheet" href="create.css">
-    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="styles/create.css">
+    <link rel="stylesheet" href="styles/common.css">
 </head>
 
 <body>
@@ -14,20 +14,22 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['user_role'] != 2){
-    header("Location: ../lobby/lobby.php");
+    header("Location: lobby.php");
     exit();
 }
+    
+require_once("../db/room.php");
 
 ?> 
     <header>
-        <form method="get" action="../lobby/lobby.php">
+        <form method="get" action="lobby.php">
             <button  type="submit" class="header_button">Излез</button>
         </form>
     </header>
     <div class="container">
         <div class="create-form">
             <h1 class="title">Създаване на стая</h1>
-            <form action="create_room.php" method="post" enctype="multipart/form-data">
+            <form action="../controllers/create_room_controller.php" method="post" enctype="multipart/form-data">
                 <div>
                     <input type="text" name="title" id="title" class="field" placeholder="Име">
                 </div>
@@ -37,29 +39,20 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
                 <div class="room_types">
                     
 					<?php
-						require '../connect_db.php';
-						$db = Database::getInstance();
-						$pdo = $db->getConnection();
-						$query = 'SELECT * FROM room_type';
-						$st = $pdo->query($query);
-						while(($row = $st->fetch(PDO::FETCH_ASSOC)) != FALSE){
-							if ($row['avg_time'] != NULL){
-								$time_text = "(~ {$row['avg_time']} минути)"; 
-							}
-							else{
-								$time_text = '';
-							}
-							echo "<div class=\"row\">
+                    $room = new RoomModel();
+                    $types = $room->getRoomTypes();
+                    foreach($types as $row){
+                        echo "<div class=\"row\">
 							<input type=\"radio\" name=\"type\" id={$row['id']} value={$row['id']}>
-							<label for={$row['id']}>{$row['name']} $time_text</label>
+							<label for={$row['id']}>{$row['name']} {$row['time_text']}</label>
 							</div>";
-						}
+                    }
 						
 					?>
 					
                 </div>
 				<div class="row">
-					<a href="create_room_type_form.php">Създай нов тип стая</a>
+					<a href="create_room_type.php">Създай нова стая</a>
 				</div>
 				
                 <div>
