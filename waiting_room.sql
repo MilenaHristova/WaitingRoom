@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 01:25 AM
+-- Generation Time: Feb 14, 2022 at 05:43 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -42,8 +42,8 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`msg_id`, `room_id`, `text`, `author_id`, `author_name`, `send_to`, `time`) VALUES
-(6, 82, 'Съобщение до всички!', 6, 'Студент Едно', 0, '2022-02-13 07:34:46'),
-(7, 82, 'Съобщение до преподавател', 7, 'Студент Две', 1, '2022-02-13 07:35:21');
+(9, 85, 'Съобщение до всички!', 6, 'Студент 1', 0, '2022-02-14 06:42:34'),
+(10, 85, 'Съобщение до преподавател', 7, 'Студент 2', 1, '2022-02-14 06:43:04');
 
 -- --------------------------------------------------------
 
@@ -70,8 +70,8 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`room_id`, `creator_id`, `moderator_id`, `name`, `description`, `type_id`, `url`, `meeting_password`, `break_until`, `avg_time`, `passed_people`) VALUES
-(82, 21, 6, 'Защита на проект', 'Стая създадена от преподавател 1; Модератор - Студент Едно; Списък - fn2.csv; Тип - Защита на проект (~ 15 минути);', 1, 'https://bbb.fmi.uni-sofia.bg/html5client/join?sessionToken=oji2e4291n69zzmm', '', NULL, 15, 0),
-(84, 20, 20, 'Устен изпит', 'Стая създадена от преподавател 2;  създадена без списък и без тип', NULL, '', '', NULL, NULL, 0);
+(84, 20, 20, 'Устен изпит', 'Стая създадена от преподавател 2;  създадена без списък и без тип', NULL, '', '', NULL, NULL, 0),
+(85, 21, 6, 'Представяне на проекти', 'Стая създадена от преподавател 1; Модератор - Студент Едно; Списък - fn2.csv; Тип - Защита на проект (~ 15 минути);', 1, 'https://bbb.fmi.uni-sofia.bg/', '', NULL, 15, 0);
 
 -- --------------------------------------------------------
 
@@ -97,20 +97,20 @@ CREATE TABLE `room_student` (
 --
 
 INSERT INTO `room_student` (`id`, `room_id`, `student_id`, `time`, `in_time`, `out_time`, `waiting`, `team`, `in_room`, `is_next`) VALUES
-(69, 82, 6, '2022-01-28 12:45:00', '2022-02-13 19:33:02', NULL, 0, 1, 1, 1),
-(70, 82, 7, '2022-01-29 12:45:00', NULL, NULL, 1, 2, 0, 1),
-(71, 82, 8, '2022-01-30 12:45:00', NULL, NULL, 1, 2, 0, 1),
-(72, 82, 9, '2022-01-31 12:45:00', NULL, NULL, 1, 3, 0, 0),
-(73, 82, 10, '2022-02-01 12:45:00', NULL, NULL, 1, 3, 0, 0),
-(74, 82, 11, '2022-02-02 12:45:00', NULL, NULL, 1, 4, 0, 0),
-(75, 82, 12, '2022-02-03 12:45:00', NULL, NULL, 1, 5, 0, 0),
-(76, 82, 13, '2022-02-04 12:45:00', NULL, NULL, 1, 6, 0, 0),
-(77, 82, 14, '2022-02-05 12:45:00', NULL, NULL, 1, 7, 0, 0),
-(78, 82, 15, '2022-02-06 12:45:00', NULL, NULL, 1, 8, 0, 0),
-(79, 82, 16, '2022-02-07 12:45:00', NULL, NULL, 1, 9, 0, 0),
-(80, 82, 17, '2022-02-08 12:45:00', NULL, NULL, 1, 10, 0, 0),
-(81, 82, 18, '2022-02-09 12:45:00', NULL, NULL, 1, 11, 0, 0),
-(82, 82, 19, '2022-02-10 12:45:00', NULL, NULL, 1, 12, 0, 0);
+(93, 85, 6, '2022-02-15 12:45:00', '2022-02-14 18:40:31', NULL, 0, 1, 1, 0),
+(94, 85, 7, '2022-02-15 13:00:00', NULL, NULL, 1, 2, 0, 1),
+(95, 85, 8, '2022-02-15 13:00:00', NULL, NULL, 1, 2, 0, 1),
+(96, 85, 9, '2022-02-15 13:15:00', NULL, NULL, 1, 3, 0, 0),
+(97, 85, 10, '2022-02-15 13:15:00', NULL, NULL, 1, 3, 0, 0),
+(98, 85, 11, '2022-02-15 13:30:00', NULL, NULL, 1, 4, 0, 0),
+(99, 85, 12, '2022-02-15 13:45:00', NULL, NULL, 1, 5, 0, 0),
+(100, 85, 13, '2022-02-15 14:00:00', NULL, NULL, 1, 6, 0, 0),
+(101, 85, 14, '2022-02-15 14:15:00', NULL, NULL, 1, 7, 0, 0),
+(102, 85, 15, '2022-02-15 14:30:00', NULL, NULL, 1, 8, 0, 0),
+(103, 85, 16, '2022-02-15 14:45:00', NULL, NULL, 1, 9, 0, 0),
+(104, 85, 17, '2022-02-15 15:00:00', NULL, NULL, 1, 10, 0, 0),
+(105, 85, 18, '2022-02-15 15:15:00', NULL, NULL, 1, 11, 0, 0),
+(106, 85, 19, '2022-02-15 15:30:00', NULL, NULL, 1, 12, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -220,19 +220,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `room_student`
 --
 ALTER TABLE `room_student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `room_type`
