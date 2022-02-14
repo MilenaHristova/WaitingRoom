@@ -71,7 +71,7 @@
         $panel_visibility = 'visible';
         $text = 'Твой ред е!';
         if($descr["url"] != null){
-            $text = $text.'url: '.$descr["url"].' ';
+            $text = $text.' url: <a href="'.$descr["url"].'">'.$descr["url"].'</a> ';
         }
         if($descr["meeting_password"] != null){
             $text = $text.'парола:'.$descr["meeting_password"];
