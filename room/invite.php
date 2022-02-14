@@ -14,15 +14,15 @@ function isStudentInRoom($room_id, $student_id, $pdo){
     return $row != FALSE;
 }
 
+$id = $_POST["student_id"];
+$room_id = $_POST["room_id"];
+
 if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
     if(!isset($_SESSION['user_role']) | $_SESSION['user_role'] == 1){
         header("Location: ../lobby/lobby.php");
         exit();
     } 
-    
-    $id = $_POST["student_id"];
-    $room_id = $_POST["room_id"];
-    
+       
     $db = Database::getInstance();
     $pdo = $db->getConnection();
     
@@ -60,7 +60,6 @@ if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
         exit();
     } 
     
-    $room_id = $_POST["room_id"];
     
     $db = Database::getInstance();
     $pdo = $db->getConnection();
@@ -77,6 +76,15 @@ if(isset($_POST["invite_temp"]) | isset($_POST["invite"])){
     $pdo->exec($sql);
     
     header("Location: ../room/room.php?room=".$room_id);
+    exit();
+} elseif(isset($_POST['make_moderator'])){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'UPDATE rooms SET moderator_id ='.$id.' WHERE room_id = '.$room_id;
+	$pdo->exec($sql);
+
+	header("Location: ../room/room.php?room=".$room_id);
     exit();
 }
 

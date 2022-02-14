@@ -36,11 +36,14 @@
     
     $user_role = $_SESSION['user_role'];
     $user_id = $_SESSION['user_id'];
-       
+	
     $room_id = $_REQUEST['room'];
     $descr = loadRoomDescr($room_id);
-    $students = loadQueue($room_id, 10);
-    
+	
+	$is_creator = checkIfCreator($room_id, $user_id);
+	$is_moderator = checkIfModerator($room_id, $user_id);
+	
+    $students = loadQueue($room_id, 10);   
     $next_team = getNext($room_id);
     $next_fn = $next_team == FALSE ? FALSE : implode(', ', $next_team);
     
@@ -85,7 +88,7 @@
 		<?php if(checkIfCreator($room_id, $user_id)):?>
 			<form method="post" action="queue_operations.php">
 				<input type="hidden" name="room_id" value=<?php echo $room_id;?>>
-				<input type="submit" class="header_button" name="delete_room" value="Изтриий стаята">
+				<input type="submit" class="header_button" name="delete_room" value="Изтрий стаята">
 			</form>
 		<?php endif;?>
         <p><?php echo $descr["name"] ?></p>
@@ -98,7 +101,7 @@
     </div>
     <?php 
     
-    if($user_role == 2){
+    if($is_creator || $is_moderator){
         include("admin.php");
         include("queue_admin.php");
         include("list.php");

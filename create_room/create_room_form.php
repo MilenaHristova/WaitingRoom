@@ -59,7 +59,7 @@ if(!isset($_SESSION['user_id']) | !isset($_SESSION['user_role']) | $_SESSION['us
 					
                 </div>
 				<div class="row">
-					<a href="create_room_type_form.php">Създай нова стая</a>
+					<a href="create_room_type_form.php">Създай нов тип стая</a>
 				</div>
 				
                 <div>

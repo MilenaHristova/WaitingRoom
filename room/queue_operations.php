@@ -184,7 +184,7 @@ function getEstimatedWaitingTime($room_id, $student_id){
 	$st = $pdo->query($sql);
     $before = $st->rowCount();
 	
-	return $before * $avg_time;
+	return ($before + 1) * $avg_time;
 }
 
 function checkIfInQueue($room_id, $student_id){
@@ -252,6 +252,16 @@ function checkIfCreator($room_id, $user_id){
 	$st = $pdo->query($sql);
 	$res = $st->fetch(PDO::FETCH_ASSOC);
 	return $res['creator_id'] == $user_id;
+}
+
+function checkIfModerator($room_id, $user_id){
+	$db = Database::getInstance();
+    $pdo = $db->getConnection();
+	
+	$sql = 'SELECT moderator_id FROM rooms WHERE room_id = '.$room_id;
+	$st = $pdo->query($sql);
+	$res = $st->fetch(PDO::FETCH_ASSOC);
+	return $res['moderator_id'] == $user_id;
 }
 
 function deleteRoom($room_id){

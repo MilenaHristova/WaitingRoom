@@ -20,6 +20,9 @@
                             <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
                             <input type="submit" class="blue_button" name="invite_temp" value="Покани временно">
                             <input type="submit" class="blue_button" name="invite" value="Покани постоянно">
+							<?php if ($is_creator):?>
+							<input type="submit" class="blue_button" name="make_moderator" value="Покани за помощник">
+							<?php endif;?>
                         </form>
             <?php
                     }
