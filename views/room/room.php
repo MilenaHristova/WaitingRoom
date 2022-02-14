@@ -52,7 +52,7 @@
     $is_creator = $roomModel->checkIfCreator($room_id, $user_id);
 	$is_moderator = $roomModel->checkIfModerator($room_id, $user_id);
 
-    $students = $queueModel->loadQueue($room_id, 10);
+    $students = $queueModel->loadQueue($room_id, 30);
     
     $next_team = $queueModel->getNext($room_id);
     $next_fn = $next_team == FALSE ? FALSE : implode(', ', $next_team);
